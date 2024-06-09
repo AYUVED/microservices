@@ -1,0 +1,10 @@
+
+
+DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order \ 
+APPLICATION_PORT=3000 \
+ENV=development \
+
+DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order APPLICATION_PORT=3000 ENV=development go run cmd/main.go
+
+
+grpcurl -d '{"user_id": 123, "order_items": [{"product_code": "prod", "quantity": 4, "unit_price": 12}]}' -plaintext localhost:3000 Order/Create

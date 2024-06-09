@@ -10,26 +10,21 @@ func GetEnv() string {
 	return getEnvironmentValue("ENV")
 }
 
-func GetDataSourceURL() string {
-	return getEnvironmentValue("DATA_SOURCE_URL")
-}
-
 func GetApplicationPort() int {
-	portStr := getEnvironmentValue("APPLICATION_PORT")
-	port, err := strconv.Atoi(portStr)
-
+	port, err := strconv.Atoi(getEnvironmentValue("APPLICATION_PORT"))
 	if err != nil {
-		log.Fatalf("port: %s is invalid", portStr)
+		log.Fatalf("APPLICATION_PORT environment variable is not a number.")
 	}
 
 	return port
 }
 
-func GetPaymentServiceUrl() string {
-	return getEnvironmentValue("PAYMENT_SERVICE_URL")
+func GetDataSourceURL() string {
+	return getEnvironmentValue("DATA_SOURCE_URL")
 }
 
 func getEnvironmentValue(key string) string {
+	log.Printf("Getting environment variable %s", os.Getenv(key))
 	if os.Getenv(key) == "" {
 		log.Fatalf("%s environment variable is missing.", key)
 	}
