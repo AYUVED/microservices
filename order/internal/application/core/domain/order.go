@@ -1,12 +1,8 @@
 package domain
 
-import "time"
-
-type OrderItem struct {
-	ProductCode string  `json:"product_code"`
-	UnitPrice   float32 `json:"unit_price"`
-	Quantity    int32   `json:"quantity"`
-}
+import (
+	"time"
+)
 
 type Order struct {
 	ID         int64       `json:"id"`
@@ -16,6 +12,12 @@ type Order struct {
 	CreatedAt  int64       `json:"created_at"`
 }
 
+type OrderItem struct {
+	ProductCode string  `json:"product_code"`
+	UnitPrice   float32 `json:"unit_price"`
+	Quantity    int32   `json:"quantity"`
+}
+
 func NewOrder(customerId int64, orderItems []OrderItem) Order {
 	return Order{
 		CreatedAt:  time.Now().Unix(),
@@ -23,4 +25,12 @@ func NewOrder(customerId int64, orderItems []OrderItem) Order {
 		CustomerID: customerId,
 		OrderItems: orderItems,
 	}
+}
+
+func (o *Order) TotalPrice() float32 {
+	var totalPrice float32
+	for _, orderItem := range o.OrderItems {
+		totalPrice += orderItem.UnitPrice * float32(orderItem.Quantity)
+	}
+	return totalPrice
 }

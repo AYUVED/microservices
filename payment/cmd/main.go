@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/ayuved/microservices/order/config"
-	"github.com/ayuved/microservices/order/internal/adapters/db"
-	"github.com/ayuved/microservices/order/internal/adapters/grpc"
-	"github.com/ayuved/microservices/order/internal/adapters/payment"
-	"github.com/ayuved/microservices/order/internal/application/core/api"
+	"os"
+
+	"github.com/ayuved/microservices/payment/config"
+	"github.com/ayuved/microservices/payment/internal/adapters/db"
+	"github.com/ayuved/microservices/payment/internal/adapters/grpc"
+	"github.com/ayuved/microservices/payment/internal/application/core/api"
 	log "github.com/sirupsen/logrus"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -15,22 +16,24 @@ import (
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
-	"os"
 )
 
 const (
-	service     = "order"
+	service     = "payment"
 	environment = "dev"
-	id          = 1
+	id          = 2
 )
 
 func tracerProvider(url string) (*tracesdk.TracerProvider, error) {
+	// Create the Jaeger exporter
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
 		return nil, err
 	}
 	tp := tracesdk.NewTracerProvider(
+		// Always be sure to batch in production.
 		tracesdk.WithBatcher(exp),
+		// Record information about this application in a Resource.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
 			semconv.ServiceNameKey.String(service),
@@ -78,12 +81,7 @@ func main() {
 		log.Fatalf("Failed to connect to database. Error: %v", err)
 	}
 
-	paymentAdapter, err := payment.NewAdapter(config.GetPaymentServiceUrl())
-	if err != nil {
-		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
-	}
-
-	application := api.NewApplication(dbAdapter, paymentAdapter)
+	application := api.NewApplication(dbAdapter)
 	grpcAdapter := grpc.NewAdapter(application, config.GetApplicationPort())
 	grpcAdapter.Run()
 }

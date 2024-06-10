@@ -2,14 +2,13 @@ package grpc
 
 import (
 	"fmt"
-	"net"
-
-	"github.com/ayuved/microservices-proto/golang/order"
-	"github.com/ayuved/microservices/order/config"
-	"github.com/ayuved/microservices/order/internal/ports"
-	log "github.com/sirupsen/logrus"
+	"github.com/ayuved/microservices-proto/golang/payment"
+	"github.com/ayuved/microservices/payment/config"
+	"github.com/ayuved/microservices/payment/internal/ports"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc/reflection"
+	"log"
+	"net"
 
 	"google.golang.org/grpc"
 )
@@ -18,7 +17,7 @@ type Adapter struct {
 	api    ports.APIPort
 	port   int
 	server *grpc.Server
-	order.UnimplementedOrderServer
+	payment.UnimplementedPaymentServer
 }
 
 func NewAdapter(api ports.APIPort, port int) *Adapter {
@@ -37,14 +36,14 @@ func (a Adapter) Run() {
 		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
 	)
 	a.server = grpcServer
-	order.RegisterOrderServer(grpcServer, a)
+	payment.RegisterPaymentServer(grpcServer, a)
 	if config.GetEnv() == "development" {
 		reflection.Register(grpcServer)
 	}
 
-	log.Printf("starting order service on port %d ...", a.port)
+	log.Printf("starting payment service on port %d ...", a.port)
 	if err := grpcServer.Serve(listen); err != nil {
-		log.Fatalf("failed to serve grpc on port %d", a.port)
+		log.Fatalf("failed to serve grpc on port ")
 	}
 }
 
