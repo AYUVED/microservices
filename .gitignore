@@ -1,2 +1,4 @@
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
+.idea
+.DS_Store

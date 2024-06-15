@@ -34,6 +34,20 @@ func (a Application) PlaceOrder(ctx context.Context, order domain.Order) (domain
 			Field:       "payment",
 			Description: st.Message(),
 		}
+		// var allErrors []string
+		// for _, detail := range st.Details() {
+		// 	switch t := detail.(type) {
+		// 	case *errdetails.BadRequest:
+		// 		for _, violation := range t.GetFieldViolations() {
+		// 			allErrors = append(allErrors, violation.Description)
+		// 		}
+		// 	}
+		// }
+
+		// fieldErr := &errdetails.BadRequest_FieldViolation{
+		// 	Field:       "payment",
+		// 	Description: strings.Join(allErrors, "\n"),
+		// }
 		badReq := &errdetails.BadRequest{}
 		badReq.FieldViolations = append(badReq.FieldViolations, fieldErr)
 		orderStatus := status.New(codes.InvalidArgument, "order creation failed")

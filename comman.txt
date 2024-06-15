@@ -4,14 +4,22 @@ DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order \
 APPLICATION_PORT=3000 \
 ENV=development \
 
-DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order APPLICATION_PORT=3000 ENV=development PAYMENT_SERVICE_URL=localhost:3001 go run cmd/main.go
-
-
 grpcurl -d '{"user_id": 123, "order_items": [{"product_code": "prod", "quantity": 4, "unit_price": 12}]}' -plaintext localhost:3000 Order/Create
-
 
 go get -u github.com/ayuved/microservices-proto/golang/payment
 
 go get -u github.com/ayuved/microservices-proto/golang/payment@v1.0.1
 
 DB_DRIVER=mysql DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/payment APPLICATION_PORT=3001 ENV=development go run cmd/main.go
+
+DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order APPLICATION_PORT=3000 ENV=development PAYMENT_SERVICE_URL=localhost:3001 go run cmd/main.go
+
+
+grpcurl -d '{"user_id": 123, "order_items":[{"product_code":"sku1", "unit_price": 0.12, "quantity":1}]}' -plaintext localhost:3000 Order/Create
+
+use order
+select * from order;
+select * from order_items;
+
+select * from payments;
+

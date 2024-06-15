@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/ayuved/microservices/order/config"
 	"github.com/ayuved/microservices/order/internal/adapters/db"
 	"github.com/ayuved/microservices/order/internal/adapters/grpc"
@@ -15,7 +17,6 @@ import (
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 	"go.opentelemetry.io/otel/trace"
-	"os"
 )
 
 const (
