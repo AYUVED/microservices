@@ -14,12 +14,33 @@ DB_DRIVER=mysql DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/payment 
 
 DATA_SOURCE_URL=root:verysecretpass@tcp(127.0.0.1:3306)/order APPLICATION_PORT=3000 ENV=development PAYMENT_SERVICE_URL=localhost:3001 go run cmd/main.go
 
+DB_DRIVER=postgres DATA_SOURCE_URL=postgres://postgres:password@127.0.0.1:5432/payments APPLICATION_PORT=3001 ENV=development go run cmd/main.go
+
+DATA_SOURCE_URL=postgres://postgres:password@127.0.0.1:5432/orders APPLICATION_PORT=3000 ENV=development PAYMENT_SERVICE_URL=localhost:3001 go run cmd/main.go
+
 
 grpcurl -d '{"user_id": 123, "order_items":[{"product_code":"sku1", "unit_price": 0.12, "quantity":1}]}' -plaintext localhost:3000 Order/Create
 
-use order
+use orders
 select * from order;
 select * from order_items;
 
 select * from payments;
+
+brew install postgresql
+sudo psql postgres://postgres:password@127.0.0.1:5432/users
+
+CREATE DATABASE orders;
+
+This means we will first generate a private key and a self- signed certificate for the certificate authority:
+openssl req -x509 -sha256 -newkey rsa:4096 -days 365 -keyout ca-key.pem -out ca-cert.pem -subj "/C=US/ST=NJ/L=EDISON/O=Software/OU=Microservices/N=*.microservices.dev/emailAddress=ayuved009@gmail.com" -nodes
+
+You can verify the generated self-certificate for the CA with the following command:
+openssl x509 -in ca-cert.pem -noout -text
+
+Once you verify it, we can proceed with the private key and certificate signing request:
+openssl req -newkey rsa:4096 -keyout server-key.pem -out server-req.pem -subj "/C=US/ST=NJ/L=EDISON/O=Microservices/OU=PaymentService/CN=*.microservices.dev/emailAddress=ayuved009@gmail.com" -nodes -sha256
+
+Then we will use CA’s private key to sign the request:
+openssl x509 -req -in server-req.pem -days 60 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -extfile server-ext.cnf -sha256
 

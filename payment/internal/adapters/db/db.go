@@ -6,7 +6,10 @@ import (
 
 	"github.com/ayuved/microservices/payment/internal/application/core/domain"
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
-	"gorm.io/driver/mysql"
+
+	// "gorm.io/driver/mysql"
+
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -51,7 +54,8 @@ func (a Adapter) Save(ctx context.Context, payment *domain.Payment) error {
 }
 
 func NewAdapter(dataSourceUrl string) (*Adapter, error) {
-	db, openErr := gorm.Open(mysql.Open(dataSourceUrl), &gorm.Config{})
+	db, openErr := gorm.Open(postgres.Open(dataSourceUrl), &gorm.Config{})
+	// db, openErr := gorm.Open(mysql.Open(dataSourceUrl), &gorm.Config{})
 	if openErr != nil {
 		return nil, fmt.Errorf("db connection error: %v", openErr)
 	}
