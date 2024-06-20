@@ -14,20 +14,22 @@ up:
 	@echo "Docker images started!"
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build: build_broker build_auth build_logger build_mail build_listener
+up_build: build_order build_payment  ##build_broker build_auth build_logger build_mail build_listener
 	@echo "Stopping docker images (if running...)"
 	docker-compose down
 	@echo "Building (when required) and starting docker images..."
 	docker-compose up --build -d
 	@echo "Docker images built and started!"
 
-## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build1: build_order build_payment 
-	@echo "Stopping docker images (if running...)"
-	docker-compose down
-	@echo "Building (when required) and starting docker images..."
-	docker-compose up --build -d
-	@echo "Docker images built and started!"
+
+## git push
+git_push:
+	@echo "Pushing to git..."
+	cd ..
+	git add .
+	git commit -m "update"
+	git push origin main
+	@echo "Done!"
 ## down: stop docker compose
 down:
 	@echo "Stopping docker compose..."
