@@ -2,3 +2,4 @@
     insteadOf = https://github.com/
 .idea
 .DS_Store
+resources/postgres-data
