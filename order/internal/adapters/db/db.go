@@ -7,8 +7,6 @@ import (
 	"github.com/ayuved/microservices/order/internal/application/core/domain"
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
 
-	//"gorm.io/driver/mysql"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
