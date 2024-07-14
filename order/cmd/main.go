@@ -85,6 +85,7 @@ func main() {
 	}
 
 	application := api.NewApplication(dbAdapter, paymentAdapter)
+
 	grpcAdapter := grpc.NewAdapter(application, config.GetApplicationPort())
 	grpcAdapter.Run()
 }

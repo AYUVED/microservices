@@ -44,6 +44,9 @@ openssl req -newkey rsa:4096 -keyout server-key.pem -out server-req.pem -subj "/
 Then we will use CA’s private key to sign the request:
 openssl x509 -req -in server-req.pem -days 60 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -extfile server-ext.cnf -sha256
 
+docker build -t broker .
+docker tag order 909007/broker:1.0.0
+docker push 909007/broker:1.0.0
 
 docker build -t order .
 docker tag order 909007/order:1.0.0
@@ -54,3 +57,11 @@ docker tag payment 909007/payment:1.0.0
 docker push 909007/payment:1.0.0
 
 docker run -d -e APPLICATION_PORT=8080 -e PAYMENT_SERVICE_URL=payment:8081 909007/order:1.0.0
+
+
+grpcurl -d '{"user_id": 123, "order_items":[{"product_code":"sku1", "unit_price": 0.12, "quantity":1}]}' -plaintext localhost:8080 Order/Create
+
+go clean -cache
+go clean -modcache
+go mod tidy
+go build
