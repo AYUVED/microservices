@@ -21,6 +21,11 @@ up_build: build_broker build_order build_payment  ##build_broker build_auth buil
 	docker-compose up --build -d
 	@echo "Docker images built and started!"
 
+# git push
+gitpush:
+	@echo "Pushing to git..."
+	bash ../push.sh
+	@echo "Done!"
 
 ## git push
 git_push:
