@@ -92,7 +92,7 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
-	log.Printf("Order: %v\n", o)
+	log.Printf("Order1: %v\n", o)
 
 	// var orderPayload OrderPayload
 	orderdapter, err := order.NewAdapter(config.GetOrderServiceUrl())
