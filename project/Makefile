@@ -27,14 +27,7 @@ gitpush:
 	bash ../push.sh
 	@echo "Done!"
 
-## git push
-git_push:
-	@echo "Pushing to git..."
-	cd ..
-	git add .
-	git commit -m "update"
-	git push origin main
-	@echo "Done!"
+
 ## down: stop docker compose
 down:
 	@echo "Stopping docker compose..."
@@ -104,3 +97,17 @@ stop:
 	@echo "Stopping front end..."
 	@-pkill -SIGTERM -f "./${FRONT_END_BINARY}"
 	@echo "Stopped front end!"
+
+## docpush: push to docker hub
+docpush:
+	@echo "Pushing to docker hub..."
+	cd ../broker && docker build -t 909007/broker:1.0.0 .
+	docker tag broker 909007/broker:1.0.0
+	docker push 909007/broker:1.0.0
+	cd ../order && docker build -t 909007/order:1.0.0 .
+	docker tag order 909007/order:1.0.0
+	docker push 909007/order:1.0.0
+	cd ../payment && docker build -t 909007/payment:1.0.0 .
+	docker tag order 909007/payment:1.0.0
+	docker push 909007/payment:1.0.0
+	@echo "Done!"

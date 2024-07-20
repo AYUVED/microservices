@@ -29,10 +29,6 @@ spec:
       labels:
         service: order
     spec:
-      initContainers:
-      - name: mysql-check
-        image: busybox:1.28
-        command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 10; done;']
       containers:
       - name: order
         image: order

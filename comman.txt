@@ -65,3 +65,15 @@ go clean -cache
 go clean -modcache
 go mod tidy
 go build
+
+
+postgress
+
+ sudo psql postgres://postgres:password@127.0.0.1:5432
+ \d
+ \dt
+ select * from orders;
+
+
+docker tag order 909007/order:1.0.0
+docker push 909007/order:1.0.0

@@ -1,0 +1,10 @@
+https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Fx86-64%2Fstable%2Fbinary+download
+
+https://kubernetes.io/docs/tasks/tools/
+minikube start --nodes=2
+minikube delete
+
+minikube dashboard
+minikube status
+
+kubectl apply -f k8s
