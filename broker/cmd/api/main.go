@@ -29,7 +29,7 @@ func main() {
 		// Rabbit: rabbitConn,
 	}
 
-	log.Printf("Starting broker service on port %s\n", webPort)
+	log.Printf("Starting broker service on port123 %s\n", webPort)
 
 	// define http server
 	srv := &http.Server{
