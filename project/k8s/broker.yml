@@ -13,31 +13,36 @@ spec:
         app: broker
     spec:
       containers:
-      - name: broker
-        image: "909007/broker:1.0.1"
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-          - containerPort: 8082
-
+        - name: broker
+          image: "909007/broker:latest"
+          imagePullPolicy:  Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: APPLICATION_PORT
+              value:  "8082"
+            - name: ORDER_SERVICE_URL
+              value:  "order:8080"
+            - name: ENV
+              value:  "prod"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+          
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
   name: broker
+  labels:
+    app:  broker
 spec:
   selector:
     app: broker
   ports:
     - protocol: TCP
-      name: main-port
       port: 8082
       targetPort: 8082
   type: LoadBalancer
-      

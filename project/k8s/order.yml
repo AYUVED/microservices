@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: order
-          image: "909007/order:1.0.0"
+          image: "909007/order:latest"
+          imagePullPolicy:  Always
           ports:
             - containerPort: 8080
           env:
@@ -43,8 +44,7 @@ spec:
   selector:
     app: order
   ports:
-    - name: grpc
-      protocol: TCP
+    - protocol: TCP
       port: 8080
       targetPort: 8080
   type: LoadBalancer

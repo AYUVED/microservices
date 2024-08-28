@@ -16,9 +16,12 @@ up:
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
 up_build: build_broker build_order build_payment  ##build_broker build_auth build_logger build_mail build_listener
 	@echo "Stopping docker images (if running...)"
-	docker-compose down
+	docker-compose rm -f
+	docker-compose pull
+	
 	@echo "Building (when required) and starting docker images..."
-	docker-compose up --build -d
+	# # docker-compose up --build  -d  
+	docker-compose build --no-cache
 	@echo "Docker images built and started!"
 
 # git push
@@ -37,55 +40,55 @@ down:
 ## build_broker: builds the broker binary as a linux executable
 build_broker:
 	@echo "Building broker binary..."
-	cd ../broker && env GOOS=linux CGO_ENABLED=0 go build -o ${BROKER_BINARY} ./cmd/api
+	cd ../broker && env GOOS=linux CGO_ENABLED=0 go build -a -o ${BROKER_BINARY} ./cmd/api
 	@echo "Done!"
 
 
 ## build_order: builds the order binary as a linux executable
 build_order:
 	@echo "Building order binary..."
-	cd ../order && env GOOS=linux CGO_ENABLED=0 go build -o ${ORDER_BINARY} ./cmd
+	cd ../order && env GOOS=linux CGO_ENABLED=0 go build -a -o ${ORDER_BINARY} ./cmd
 	@echo "Done!"
 
 ## build_payment: builds the payment binary as a linux executable
 build_payment:
 	@echo "Building payment binary..."
-	cd ../payment && env GOOS=linux CGO_ENABLED=0 go build -o ${PAYMENT_BINARY} ./cmd
+	cd ../payment && env GOOS=linux CGO_ENABLED=0 go build -a -o ${PAYMENT_BINARY} ./cmd
 	@echo "Done!"
 ## build_logger: builds the logger binary as a linux executable
 build_logger:
 	@echo "Building logger binary..."
-	cd ../logger-service && env GOOS=linux CGO_ENABLED=0 go build -o ${LOGGER_BINARY} ./cmd/api
+	cd ../logger-service && env GOOS=linux CGO_ENABLED=0 go build -a -o ${LOGGER_BINARY} ./cmd/api
 	@echo "Done!"
 
 ## build_listener: builds the listener binary as a linux executable
 build_listener:
 	@echo "Building listener binary..."
-	cd ../listener-service && env GOOS=linux CGO_ENABLED=0 go build -o ${LISTENER_BINARY} .
+	cd ../listener-service && env GOOS=linux CGO_ENABLED=0 go build -a -o ${LISTENER_BINARY} .
 	@echo "Done!"
 
 ## build_auth: builds the auth binary as a linux executable
 build_auth:
 	@echo "Building auth binary..."
-	cd ../authentication-service && env GOOS=linux CGO_ENABLED=0 go build -o ${AUTH_BINARY} ./cmd/api
+	cd ../authentication-service && env GOOS=linux CGO_ENABLED=0 go build -a -o ${AUTH_BINARY} ./cmd/api
 	@echo "Done!"
 
 ## build_mail: builds the mail binary as a linux executable
 build_mail:
 	@echo "Building mail binary..."
-	cd ../mail-service && env GOOS=linux CGO_ENABLED=0 go build -o ${MAIL_BINARY} ./cmd/api
+	cd ../mail-service && env GOOS=linux CGO_ENABLED=0 go build -a -o ${MAIL_BINARY} ./cmd/api
 	@echo "Done!"
 
 ## build_front: builds the frone end binary
 build_front:
 	@echo "Building front end binary..."
-	cd ../front-end && env CGO_ENABLED=0 go build -o ${FRONT_END_BINARY} ./cmd/web
+	cd ../front-end && env CGO_ENABLED=0 go build -a -o ${FRONT_END_BINARY} ./cmd/web
 	@echo "Done!"
 
 ## build_front: builds the frone end binary
 build_front_linux:
 	@echo "Building front end binary..."
-	cd ../front-end && env CGO_ENABLED=0 go build -o ${FRONT_BINARY} ./cmd/web
+	cd ../front-end && env CGO_ENABLED=0 go build -a -o ${FRONT_BINARY} ./cmd/web
 	@echo "Done!"
 ## start: starts the front end
 start: build_front
@@ -102,26 +105,19 @@ stop:
 docpush:
 	@echo "Pushing to docker hub..."
 
-	cd ../broker && docker build -t 909007/broker:1.0.1 .
-	docker tag broker 909007/broker:1.0.1
-	docker push 909007/broker:1.0.1
 
-	cd ../order && docker build -t 909007/order:1.0.0 .
-	docker tag order 909007/order:1.0.0
-	docker push 909007/order:1.0.0
+	cd ../broker && docker build --no-cache -t 909007/broker:latest .
+	# docker tag broker 909007/broker:latest
+	docker push 909007/broker:latest
 
-	cd ../payment && docker build -t 909007/payment:1.0.0 .
-	docker tag payment 909007/payment:1.0.0
-	docker push 909007/payment:1.0.0
+	cd ../order && docker build --no-cache -t 909007/order:latest .
+	# docker tag order 909007/order:latest
+	docker push 909007/order:latest
+
+	cd ../payment && docker build --no-cache -t 909007/payment:latest .
+	# docker tag payment 909007/payment:latest
+	docker push 909007/payment:latest
 	@echo "Done!"
-
-## kdeploy: push to docker and deploy to kubernetes
-kdeploy:	up_build docpush
-	@echo "Deploying to kubernetes..."
-	kubectl apply -f k8s
-	kubectl apply -f postgres/postgres.yaml
-	@echo "Done!"
-
 
 ## kdelete: delete from kubernetes
 kdelete:
@@ -129,6 +125,16 @@ kdelete:
 	kubectl delete -f k8s
 	kubectl delete -f postgres/postgres.yaml
 	@echo "Done!"
+	
+## kdeploy: push to docker and deploy to kubernetes
+kdeploy:	 kdelete up_build docpush 
+	@echo "Deploying to kubernetes..."
+	kubectl apply -f k8s
+	kubectl apply -f postgres/postgres.yaml
+	@echo "Done!"
+
+
+
 
 ## kredeploy: redeploy from kubernetes
 kredeploy:  kdelete kdeploy
