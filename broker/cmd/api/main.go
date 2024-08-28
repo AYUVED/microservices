@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ayuved/microservices/broker/config"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -28,8 +29,8 @@ func main() {
 	app := Config{
 		// Rabbit: rabbitConn,
 	}
-
-	log.Printf("Starting broker service on port123 %s\n", webPort)
+	port := config.GetApplicationPort()
+	log.Printf("Starting broker123 service on port123 %s\n", port)
 
 	// define http server
 	srv := &http.Server{

@@ -2,13 +2,14 @@ package grpc
 
 import (
 	"fmt"
+	"log"
+	"net"
+
 	"github.com/ayuved/microservices-proto/golang/payment"
 	"github.com/ayuved/microservices/payment/config"
 	"github.com/ayuved/microservices/payment/internal/ports"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc/reflection"
-	"log"
-	"net"
 
 	"google.golang.org/grpc"
 )
@@ -41,7 +42,7 @@ func (a Adapter) Run() {
 		reflection.Register(grpcServer)
 	}
 
-	log.Printf("starting payment service on port %d ...", a.port)
+	log.Printf("starting 1payment service on port %d ...", a.port)
 	if err := grpcServer.Serve(listen); err != nil {
 		log.Fatalf("failed to serve grpc on port ")
 	}
