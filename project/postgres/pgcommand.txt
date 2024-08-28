@@ -1,0 +1,12 @@
+kubectl get pods
+kubectl exec -it postgres-0 -- /bin/bash
+psql -U postgres
+list db \l
+connect -  \c database_name
+
+
+# Get the PostgreSQL password from the Kubernetes Secret
+POSTGRES_PASSWORD=$(kubectl get secret postgres-credentials -o jsonpath="{.data.postgres-password}" | base64 --decode)
+
+# Connect to the PostgreSQL database
+psql -h postgres -U postgres -W

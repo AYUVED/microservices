@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      containers:
+      - name: payment
+        image: "909007/payment:1.0.0"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8081
+        env:
+          - name: APPLICATION_PORT
+            value:  "8081"
+          - name: DATA_SOURCE_URL
+            value:  "postgresql://postgres:password@postgres:5432/payments"
+          - name: ENV
+            value:  "prod"
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+  labels:
+    app:  payment
+spec:
+  selector:
+    app: payment
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+  type: LoadBalancer

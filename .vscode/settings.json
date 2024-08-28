@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/v1@persistentvolumeclaim": "file:///Users/nileshthingalaya/Go/src/github.com/ayuved/microservices/project/psql-claim.yaml"
+    }
+}

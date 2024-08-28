@@ -1,0 +1,23 @@
+kubectl get ingress my-app-ingress
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+kubectl get pods -n ingress-nginx
+ kubectl describe service broker
+
+kubectl get endpoints <service-name>
+
+
+kubectl run test-pod --image=busybox --rm -it --restart=Never -- wget -O- broker:8082
+
+kubectl get service <service-name>
+kubectl describe service <service-name>
+kubectl get pods
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+
+
+brew install helm
+
+kubectl delete ingressclass nginx
+kubectl annotate ingressclass nginx meta.helm.sh/release-name=v3.15.4 --overwrite
+kubectl annotate ingressclass nginx meta.helm.sh/release-namespace=<namespace> --overwrite

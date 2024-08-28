@@ -67,7 +67,7 @@ go mod tidy
 go build
 
 
-postgress
+postgres
 
  sudo psql postgres://postgres:password@127.0.0.1:5432
  \d

@@ -1,10 +1,51 @@
 https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Fx86-64%2Fstable%2Fbinary+download
 
 https://kubernetes.io/docs/tasks/tools/
-minikube start --nodes=2
-minikube delete
 
+minikube delete
+minikube start --nodes=2
 minikube dashboard
 minikube status
 
 kubectl apply -f k8s
+kubectl delete pod alpaca-prod 
+
+kubectl expose deployment bandicoot-prod
+
+kubectl get services -o wide
+
+kubectl config set-context my-context --namespace=mystuff
+
+kubectl exec -it postgres-f678886f6-fspsj  -- psql
+
+
+nano ps-deployment.yaml
+kubectl apply -f ps-deployment.yaml
+kubectl get deployments
+kubectl get pods
+
+nano ps-service.yaml
+kubectl apply -f ps-service.yaml
+kubectl get svc
+kubectl get pods
+
+kubectl apply -f postgres.yaml
+
+kubectl exec -it postgres-f678886f6-fns7w -- psql -h localhost -U order_user --password -p 5432 orders
+
+kubectl get pods -l app=postgres
+kubectl scale deployment --replicas=5 postgres
+kubectl port-forward service/postgresql 5432:5432
+
+kubectl run -i --tty postgres --image=postgres --restart=Never -- sh
+psql postgresql://order_user:password@postgres:5432/orders
+
+Add the following line as the first line of pg_hba.conf. It allows access to all databases for all users with an encrypted password:
+
+# TYPE DATABASE USER CIDR-ADDRESS  METHOD
+host  all  all 0.0.0.0/0 scram-sha-256
+host  all  all 0.0.0.0/0 md5
+
+
+echo -n "your-postgres-password" | base64
+

@@ -101,13 +101,37 @@ stop:
 ## docpush: push to docker hub
 docpush:
 	@echo "Pushing to docker hub..."
+
 	cd ../broker && docker build -t 909007/broker:1.0.0 .
 	docker tag broker 909007/broker:1.0.0
 	docker push 909007/broker:1.0.0
+
 	cd ../order && docker build -t 909007/order:1.0.0 .
 	docker tag order 909007/order:1.0.0
 	docker push 909007/order:1.0.0
+
 	cd ../payment && docker build -t 909007/payment:1.0.0 .
-	docker tag order 909007/payment:1.0.0
+	docker tag payment 909007/payment:1.0.0
 	docker push 909007/payment:1.0.0
 	@echo "Done!"
+
+## kdeploy: push to docker and deploy to kubernetes
+kdeploy:	docpush
+	@echo "Deploying to kubernetes..."
+	kubectl apply -f k8s
+	kubectl apply -f postgres/postgres.yaml
+	@echo "Done!"
+
+
+## kdelete: delete from kubernetes
+kdelete:
+	@echo "Deleting from kubernetes..."
+	kubectl delete -f k8s
+	kubectl delete -f postgres/postgres.yaml
+	@echo "Done!"
+
+## kredeploy: redeploy from kubernetes
+kredeploy: kdelete kdeploy
+	@echo "redeploy to kubernetes..."
+	@echo "Done!"
+

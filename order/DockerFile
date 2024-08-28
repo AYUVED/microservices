@@ -7,7 +7,8 @@
 # COPY --from=builder /usr/src/app/order ./order
 # CMD ["./order"]
 
-FROM alpine:latest
+# FROM alpine:latest
+FROM debian:buster-slim 
 RUN mkdir /app
 COPY order /app
 CMD [ "/app/order"]
