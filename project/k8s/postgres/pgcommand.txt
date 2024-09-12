@@ -10,3 +10,7 @@ POSTGRES_PASSWORD=$(kubectl get secret postgres-credentials -o jsonpath="{.data.
 
 # Connect to the PostgreSQL database
 psql -h postgres -U postgres -W
+
+
+kubectl port-forward service/postgres 5432:5432
+psql -h localhost -p 5432 -U postgres -d orders

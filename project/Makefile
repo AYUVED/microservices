@@ -16,13 +16,13 @@ up:
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
 up_build: build_broker build_order build_payment  ##build_broker build_auth build_logger build_mail build_listener
 	@echo "Stopping docker images (if running...)"
-	# docker-compose rm -f
-	# docker-compose pull
-	
 	@echo "Building (when required) and starting docker images..."
 	docker-compose up --build  -d  
-	# docker-compose build --no-cache
+	
 	@echo "Docker images built and started!"
+
+build_all: build_broker build_order build_payment ##build_auth build_logger build_mail build_listener
+	@echo "All binaries built!"
 
 # git push
 gitpush:
@@ -123,18 +123,13 @@ docpush:
 kdelete:
 	@echo "Deleting from kubernetes..."
 	kubectl delete -f k8s
-	kubectl delete -f postgres/postgres.yaml
 	@echo "Done!"
 
 ## kdeploy: push to docker and deploy to kubernetes
-kdeploy:	 kdelete up_build docpush 
+kdeploy:	  build_all docpush 
 	@echo "Deploying to kubernetes..."
 	kubectl apply -f k8s
-	kubectl apply -f postgres/postgres.yaml
 	@echo "Done!"
-
-
-
 
 ## kredeploy: redeploy from kubernetes
 kredeploy:  kdelete kdeploy

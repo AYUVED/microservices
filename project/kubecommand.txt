@@ -37,8 +37,7 @@ kubectl get pods -l app=postgres
 kubectl scale deployment --replicas=5 postgres
 kubectl port-forward service/postgresql 5432:5432
 
-kubectl run -i --tty postgres --image=postgres --restart=Never -- sh
-psql postgresql://order_user:password@postgres:5432/orders
+psql postgresql://postgres:password@postgres:5432/orders
 
 Add the following line as the first line of pg_hba.conf. It allows access to all databases for all users with an encrypted password:
 

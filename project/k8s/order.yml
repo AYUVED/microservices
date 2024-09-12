@@ -24,7 +24,7 @@ spec:
             - name: PAYMENT_SERVICE_URL
               value:  "payment:8081"
             - name: DATA_SOURCE_URL
-              value:  "postgresql://postgres:password@postgres:5432/orders"
+              value:  "postgresql://postgres:password@host.minikube.internal:5432/orders"
             - name: ENV
               value:  "prod"
           resources:
