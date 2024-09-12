@@ -30,7 +30,8 @@ func main() {
 		// Rabbit: rabbitConn,
 	}
 	port := config.GetApplicationPort()
-	log.Printf("Starting broker1 service on port1 %s\n", port)
+	log.Printf("Starting broker1 service on port1 %d\n", port)
+	log.Printf("Starting broker2 service on port2 %d\n", port)
 
 	// define http server
 	srv := &http.Server{

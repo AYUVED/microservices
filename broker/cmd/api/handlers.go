@@ -7,6 +7,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/ayuved/microservices/broker/config"
 	"github.com/ayuved/microservices/broker/internal/adapters/order"
@@ -60,9 +61,9 @@ type LogPayload struct {
 func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
 	payload := jsonResponse{
 		Error:   false,
-		Message: "Hit the broker",
+		Message: "Hit the broker1",
 	}
-
+	log.Printf("Broker: %v\n", payload)
 	_ = app.writeJSON(w, http.StatusOK, payload)
 }
 
@@ -76,7 +77,7 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 		app.errorJSON(w, err)
 		return
 	}
-
+	log.Printf("RequestPayload: %v\n", requestPayload)
 	switch requestPayload.Action {
 	// case "auth":
 	// 	app.authenticate(w, requestPayload.Auth)
@@ -85,6 +86,7 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	// case "mail":
 	// 	app.sendMail(w, requestPayload.Mail)
 	case "order":
+		log.Printf("Order: %v\n", requestPayload.Order)
 		app.PlaceOrder(w, requestPayload.Order)
 	default:
 		app.errorJSON(w, errors.New("unknown action"))
@@ -95,10 +97,12 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 	log.Printf("Order1: %v\n", o)
 
 	// var orderPayload OrderPayload
+	log.Printf("Order2: %v\n", o)
 	orderdapter, err := order.NewAdapter(config.GetOrderServiceUrl())
 	if err != nil {
 		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
+	log.Printf("Order3: %v\n", o)
 	// convert orderPayload to a format that the order service can understand
 	ctx := context.TODO()
 	var orderItems []domain.OrderItem
@@ -109,12 +113,14 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 			Quantity:    orderItem.Quantity,
 		})
 	}
+	log.Printf("Order4: %v\n", o)
 	order := domain.Order{
 		CustomerID: o.CustomerID,
 		Status:     o.Status,
 		OrderItems: orderItems,
 	}
 	err = orderdapter.Order(ctx, &order) // Assign the returned value to a variable
+	log.Printf("Order6: %v\n", order)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
@@ -149,7 +155,7 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 
 	var payload jsonResponse
 	payload.Error = false
-	payload.Message = "logged"
+	payload.Message = strconv.FormatInt(order.ID, 10)
 
 	app.writeJSON(w, http.StatusAccepted, payload)
 }

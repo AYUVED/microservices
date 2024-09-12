@@ -74,16 +74,17 @@ func main() {
 	otel.SetTracerProvider(tp)
 	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}))
 
+	log.Info("Order Service Started")
 	dbAdapter, err := db.NewAdapter(config.GetDataSourceURL())
 	if err != nil {
 		log.Fatalf("Failed to connect to database. Error: %v", err)
 	}
-
+	log.Info("Connected to database" + config.GetDataSourceURL())
 	paymentAdapter, err := payment.NewAdapter(config.GetPaymentServiceUrl())
 	if err != nil {
 		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
-
+	log.Info("Payment Adapter Initialized")
 	application := api.NewApplication(dbAdapter, paymentAdapter)
 
 	grpcAdapter := grpc.NewAdapter(application, config.GetApplicationPort())

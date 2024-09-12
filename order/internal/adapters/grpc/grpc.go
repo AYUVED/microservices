@@ -42,8 +42,11 @@ func (a Adapter) Create(ctx context.Context, request *order.CreateOrderRequest) 
 			Quantity:    orderItem.Quantity,
 		})
 	}
+	log.WithContext(ctx).Infof("OrderItems: %v\n", orderItems)
 	newOrder := domain.NewOrder(request.UserId, orderItems)
+	log.WithContext(ctx).Infof("NewOrder: %v\n", newOrder)
 	result, err := a.api.PlaceOrder(ctx, newOrder)
+	log.WithContext(ctx).Infof("Result: %v\n", result)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/ayuved/microservices/order/internal/application/core/domain"
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
@@ -74,17 +75,22 @@ func (a Adapter) Save(ctx context.Context, order *domain.Order) error {
 
 func NewAdapter(dataSourceUrl string) (*Adapter, error) {
 	// open postgres connection
+	log.Printf("DataSourceUrl: %v\n", dataSourceUrl)
 	db, openErr := gorm.Open(postgres.Open(dataSourceUrl), &gorm.Config{})
 	// db, openErr := gorm.Open(mysql.Open(dataSourceUrl), &gorm.Config{})
+	log.Printf("DB: %v\n", db)
 	if openErr != nil {
 		return nil, fmt.Errorf("db connection error: %v", openErr)
 	}
+	log.Printf("DB: %v\n", db)
 	if err := db.Use(otelgorm.NewPlugin(otelgorm.WithDBName("order"))); err != nil {
 		return nil, fmt.Errorf("db otel plugin error: %v", err)
 	}
+	log.Printf("DB: %v\n", db)
 	err := db.AutoMigrate(&Order{}, OrderItem{})
 	if err != nil {
 		return nil, fmt.Errorf("db migration error: %v", err)
 	}
+	log.Printf("DB: %v\n", db)
 	return &Adapter{db: db}, nil
 }

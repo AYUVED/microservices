@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"log"
 
 	"github.com/ayuved/microservices/order/internal/application/core/domain"
 	"github.com/ayuved/microservices/order/internal/ports"
@@ -23,10 +24,12 @@ func NewApplication(db ports.DBPort, payment ports.PaymentPort) *Application {
 }
 
 func (a Application) PlaceOrder(ctx context.Context, order domain.Order) (domain.Order, error) {
+	log.Printf("PlaceOrder1: %v\n", order)
 	err := a.db.Save(ctx, &order)
 	if err != nil {
 		return domain.Order{}, err
 	}
+	log.Printf("PlaceOrder2: %v\n", order)
 	paymentErr := a.payment.Charge(ctx, &order)
 	if paymentErr != nil {
 		st, _ := status.FromError(paymentErr)
@@ -54,6 +57,7 @@ func (a Application) PlaceOrder(ctx context.Context, order domain.Order) (domain
 		statusWithDetails, _ := orderStatus.WithDetails(badReq)
 		return domain.Order{}, statusWithDetails.Err()
 	}
+	log.Printf("Order: %v\n", order)
 	return order, nil
 }
 
