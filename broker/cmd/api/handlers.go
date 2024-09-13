@@ -81,8 +81,8 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	switch requestPayload.Action {
 	// case "auth":
 	// 	app.authenticate(w, requestPayload.Auth)
-	// case "log":
-	// 	app.logItemViaRPC(w, requestPayload.Log)
+	case "log":
+	 	app.logItemViaRPC(w, requestPayload.Log)
 	// case "mail":
 	// 	app.sendMail(w, requestPayload.Mail)
 	case "order":

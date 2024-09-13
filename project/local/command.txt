@@ -1,0 +1,6 @@
+docker postgres local
+docker-compose -f postgresLocal.yml up -d
+
+docker local mongo
+docker-compose -f mongoLocal.yml up -d
+
