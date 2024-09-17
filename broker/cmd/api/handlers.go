@@ -1,17 +1,14 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
 	"strconv"
 
+	"github.com/ayuved/microservices-helper/domain"
 	"github.com/ayuved/microservices/broker/config"
-	"github.com/ayuved/microservices/broker/internal/adapters/order"
-	"github.com/ayuved/microservices/broker/internal/application/core/domain"
 )
 
 // RequestPayload describes the JSON that this service accepts as an HTTP Post request
@@ -53,6 +50,7 @@ type AuthPayload struct {
 
 // LogPayload is the embedded type (in RequestPayload) that describes a request to log something
 type LogPayload struct {
+	App  string `json:"app"`
 	Name string `json:"name"`
 	Data string `json:"data"`
 }
@@ -82,7 +80,7 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	// case "auth":
 	// 	app.authenticate(w, requestPayload.Auth)
 	case "log":
-	 	app.logItemViaRPC(w, requestPayload.Log)
+		app.logItem(w, requestPayload.Log)
 	// case "mail":
 	// 	app.sendMail(w, requestPayload.Mail)
 	case "order":
@@ -98,7 +96,7 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 
 	// var orderPayload OrderPayload
 	log.Printf("Order2: %v\n", o)
-	orderdapter, err := order.NewAdapter(config.GetOrderServiceUrl())
+	orderdapter, err := order.NewOrderAdapter(config.GetOrderServiceUrl())
 	if err != nil {
 		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
@@ -161,39 +159,30 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 }
 
 // logItem logs an item by making an HTTP Post request with a JSON payload, to the logger microservice
-func (app *Config) logItem(w http.ResponseWriter, entry LogPayload) {
-	jsonData, _ := json.MarshalIndent(entry, "", "\t")
+func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 
-	logServiceURL := "http://logger-service/log"
+	log.Printf("Log 1: %v\n", l)
 
-	request, err := http.NewRequest("POST", logServiceURL, bytes.NewBuffer(jsonData))
+	logadapter, err := order.NewAdapter(config.GetLogServiceUrl())
+	if err != nil {
+		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
+	}
+	log.Printf("Log 2: %v\n", l)
+	// convert orderPayload to a format that the order service can understand
+	ctx := context.TODO()
+	
+	log.Printf("Order4: %v\n", o)
+	logservice := domain.Logservice{
+		App: l.App,
+		Name:     l.Name,
+		Data: l.Data,
+	}
+	err = logadapter.Add(ctx, &logservice) // Assign the returned value to a variable
+	log.Printf("Order6: %v\n", order)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
-
-	request.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-
-	response, err := client.Do(request)
-	if err != nil {
-		app.errorJSON(w, err)
-		return
-	}
-	defer response.Body.Close()
-
-	if response.StatusCode != http.StatusAccepted {
-		app.errorJSON(w, err)
-		return
-	}
-
-	var payload jsonResponse
-	payload.Error = false
-	payload.Message = "logged"
-
-	app.writeJSON(w, http.StatusAccepted, payload)
-
 }
 
 // // authenticate calls the authentication microservice and sends back the appropriate response

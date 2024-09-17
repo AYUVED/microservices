@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 
-	"github.com/ayuved/microservices/broker/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 )
 
 type OrderPort interface {

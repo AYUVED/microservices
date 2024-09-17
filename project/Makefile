@@ -1,6 +1,7 @@
 FRONT_END_BINARY=frontApp
 BROKER_BINARY=broker
 ORDER_BINARY=order
+LOGSERVICE_BINARY=logservice
 PAYMENT_BINARY=payment
 AUTH_BINARY=authApp
 MAIL_BINARY=mailApp
@@ -21,7 +22,7 @@ up_build: build_broker build_order build_payment  ##build_broker build_auth buil
 	
 	@echo "Docker images built and started!"
 
-build_all: build_broker build_order build_payment ##build_auth build_logger build_mail build_listener
+build_all: build_broker build_order build_payment build_logservice ##build_auth build_logger build_mail build_listener
 	@echo "All binaries built!"
 
 # git push
@@ -55,10 +56,10 @@ build_payment:
 	@echo "Building payment binary..."
 	cd ../payment && env GOOS=linux CGO_ENABLED=0 go build  -o ${PAYMENT_BINARY} ./cmd
 	@echo "Done!"
-## build_logger: builds the logger binary as a linux executable
-build_logger:
-	@echo "Building logger binary..."
-	cd ../logger-service && env GOOS=linux CGO_ENABLED=0 go build  -o ${LOGGER_BINARY} ./cmd/api
+## build_logservice gger: builds the logger binary as a linux executable
+build_logservice:
+	@echo "Building logservice binary..."
+	cd ../logservice && env GOOS=linux CGO_ENABLED=0 go build  -o ${LOGSERVICE_BINARY} ./cmd
 	@echo "Done!"
 
 ## build_listener: builds the listener binary as a linux executable
@@ -117,6 +118,11 @@ docpush:
 	cd ../payment && docker build --no-cache -t 909007/payment:latest .
 	# docker tag payment 909007/payment:latest
 	docker push 909007/payment:latest
+
+	cd ../logservice && docker build --no-cache -t 909007/logservice:latest .
+	# docker tag logservice 909007/logservice:latest
+	docker push 909007/logservice:latest
+
 	@echo "Done!"
 
 ## kdelete: delete from kubernetes
@@ -136,3 +142,6 @@ kredeploy:  kdelete kdeploy
 	@echo "redeploy to kubernetes..."
 	@echo "Done!"
 
+docker_db:
+	docker-compose -f ./local/postgresLocal.yml up -d
+	docker-compose -f ./local/mongoLocal.yml up -d

@@ -24,7 +24,9 @@ func GetApplicationPort() int {
 func GetOrderServiceUrl() string {
 	return getEnvironmentValue("ORDER_SERVICE_URL")
 }
-
+func GetLogServiceUrl() string {
+	return getEnvironmentValue("LOG_SERVICE_URL")
+}
 func getEnvironmentValue(key string) string {
 	if os.Getenv(key) == "" {
 		log.Fatalf("%s environment variable is missing.", key)

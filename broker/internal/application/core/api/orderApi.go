@@ -2,8 +2,8 @@ package orderApi
 
 import (
 	"context"
+	"github.com/ayuved/microservices-helper/domain"
 
-	"github.com/ayuved/microservices/broker/internal/application/core/domain"
 	"github.com/ayuved/microservices/broker/internal/ports"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
