@@ -1,5 +1,5 @@
-github.com/ayuved/microservices-helper v0.0.0-20240919200853-6bbcb0250260 h1:Ozi+1o/kphIrSGd82ahEdk9T3/OmZOP8Hc/6+2e36ig=
-github.com/ayuved/microservices-helper v0.0.0-20240919200853-6bbcb0250260/go.mod h1:pcYZYRxxe6hrCcz2ekrtpldxw7THMD22ahTRj7bQq2Y=
+github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe h1:KGvSSY6ueBXqvUStJ6EYzxPBHoE/paOPwp2f/ssTECU=
+github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe/go.mod h1:pcYZYRxxe6hrCcz2ekrtpldxw7THMD22ahTRj7bQq2Y=
 github.com/ayuved/microservices-proto/golang/logservice v1.0.1 h1:5Ipa5rnwieHEcetvi9dhzXoq47iyPIxjJkTuuK8zqWY=
 github.com/ayuved/microservices-proto/golang/logservice v1.0.1/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
 github.com/ayuved/microservices-proto/golang/order v1.0.2 h1:y5xn2Eutjz39wRtnQYvdw18nIFMg/BoDeK7p8VTnthg=

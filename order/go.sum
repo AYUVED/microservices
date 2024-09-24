@@ -8,8 +8,8 @@ github.com/Microsoft/go-winio v0.6.1 h1:9/kr64B9VUZrLm5YYwbGtUJnMgqWVOdUAXu6Migc
 github.com/Microsoft/go-winio v0.6.1/go.mod h1:LRdKpFKfdobln8UmuiYcKPot9D2v6svN5+sAH+4kjUM=
 github.com/Microsoft/hcsshim v0.11.4 h1:68vKo2VN8DE9AdN4tnkWnmdhqdbpUFM8OF3Airm7fz8=
 github.com/Microsoft/hcsshim v0.11.4/go.mod h1:smjE4dvqPX9Zldna+t5FG3rnoHhaB7QYxPRqGcpAD9w=
-github.com/ayuved/microservices-helper v0.0.0-20240919200853-6bbcb0250260 h1:Ozi+1o/kphIrSGd82ahEdk9T3/OmZOP8Hc/6+2e36ig=
-github.com/ayuved/microservices-helper v0.0.0-20240919200853-6bbcb0250260/go.mod h1:pcYZYRxxe6hrCcz2ekrtpldxw7THMD22ahTRj7bQq2Y=
+github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe h1:KGvSSY6ueBXqvUStJ6EYzxPBHoE/paOPwp2f/ssTECU=
+github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe/go.mod h1:pcYZYRxxe6hrCcz2ekrtpldxw7THMD22ahTRj7bQq2Y=
 github.com/ayuved/microservices-proto/golang/order v1.0.2 h1:y5xn2Eutjz39wRtnQYvdw18nIFMg/BoDeK7p8VTnthg=
 github.com/ayuved/microservices-proto/golang/order v1.0.2/go.mod h1:8LZDb+XhykqRYOJ36zJHD7em/y0G6LQGGIHVjBnjO7g=
 github.com/ayuved/microservices-proto/golang/payment v1.0.1 h1:X/VqKaYqBlh5EiNbH+UZIcDu73zgZCUO96JE8Bw0O8o=

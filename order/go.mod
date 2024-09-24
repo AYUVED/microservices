@@ -61,7 +61,7 @@ require (
 )
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20240919200853-6bbcb0250260
+	github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe
 	github.com/ayuved/microservices-proto/golang/order v1.0.2
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect

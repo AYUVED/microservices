@@ -116,17 +116,17 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 		Status:     o.Status,
 		OrderItems: orderItems,
 	}
-	err = orderdapter.Order(ctx, &order) // Assign the returned value to a variable
+	res,err := orderdapter.CreateOrder(ctx, &order) // Assign the returned value to a variable
 	log.Printf("PlaceOrder: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
 	log.Printf("PlaceOrder: %v\n", order)
-	
+
 	var payload jsonResponse
 	payload.Error = false
-	payload.Message = strconv.FormatInt(order.ID, 10)
+	payload.Message = strconv.FormatInt(res.OrderId, 10)
 
 	app.writeJSON(w, http.StatusAccepted, payload)
 }
