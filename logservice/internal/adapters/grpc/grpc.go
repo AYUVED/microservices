@@ -13,6 +13,7 @@ import (
 
 func (a Adapter) Add(ctx context.Context, request *logservice.CreateLogRequest) (*logservice.CreateLogResponse, error) {
 	log.WithContext(ctx).Info("Creating logservice...")
+	log.Println("Creating logservice...", request)
 	newLogservice := domain.NewLogservice(request.App, request.Name, request.Data)
 	result, err := a.api.Add(ctx, newLogservice)
 

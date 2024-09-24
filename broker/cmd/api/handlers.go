@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/ayuved/microservices-helper/adapters"
 	"github.com/ayuved/microservices-helper/domain"
 	"github.com/ayuved/microservices/broker/config"
 )
@@ -80,6 +81,7 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	// case "auth":
 	// 	app.authenticate(w, requestPayload.Auth)
 	case "log":
+
 		app.logItem(w, requestPayload.Log)
 	// case "mail":
 	// 	app.sendMail(w, requestPayload.Mail)
@@ -96,7 +98,7 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 
 	// var orderPayload OrderPayload
 	log.Printf("Order2: %v\n", o)
-	orderdapter, err := order.NewOrderAdapter(config.GetOrderServiceUrl())
+	orderdapter, err := adapters.NewOrderAdapter(config.GetOrderServiceUrl())
 	if err != nil {
 		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
@@ -163,26 +165,29 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 
 	log.Printf("Log 1: %v\n", l)
 
-	logadapter, err := order.NewAdapter(config.GetLogServiceUrl())
+	logadapter, err := adapters.NewLogServiceAdapter(config.GetLogServiceUrl())
 	if err != nil {
 		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
 	log.Printf("Log 2: %v\n", l)
 	// convert orderPayload to a format that the order service can understand
 	ctx := context.TODO()
-	
-	log.Printf("Order4: %v\n", o)
+
+	log.Printf("Log3: %v\n", l)
 	logservice := domain.Logservice{
-		App: l.App,
-		Name:     l.Name,
+		App:  l.App,
+		Name: l.Name,
 		Data: l.Data,
 	}
-	err = logadapter.Add(ctx, &logservice) // Assign the returned value to a variable
-	log.Printf("Order6: %v\n", order)
+	log.Printf("Logservice1: %v\n", logservice)
+	err = logadapter.AddLog(ctx, &logservice) // Assign the returned value to a variable
+	log.Printf("Logservice2: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
+	log.Printf("Logservice3: %v\n", logservice)
+
 }
 
 // // authenticate calls the authentication microservice and sends back the appropriate response

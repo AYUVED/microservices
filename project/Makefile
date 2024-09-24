@@ -41,25 +41,25 @@ down:
 ## build_broker: builds the broker binary as a linux executable
 build_broker:
 	@echo "Building broker binary..."
-	cd ../broker && env GOOS=linux CGO_ENABLED=0 go build  -o ${BROKER_BINARY} ./cmd/api
+	cd ../broker && go get github.com/ayuved/microservices-helper/domain && go get github.com/ayuved/microservices-helper/adapters && go mod tidy && env GOOS=linux CGO_ENABLED=0 go build  -o ${BROKER_BINARY} ./cmd/api
 	@echo "Done!"
 
 
 ## build_order: builds the order binary as a linux executable
 build_order:
 	@echo "Building order binary..."
-	cd ../order && env GOOS=linux CGO_ENABLED=0 go build  -o ${ORDER_BINARY} ./cmd
+	cd ../order && go get github.com/ayuved/microservices-helper/domain && go get github.com/ayuved/microservices-helper/adapters && go mod tidy && env GOOS=linux CGO_ENABLED=0 go build  -o ${ORDER_BINARY} ./cmd
 	@echo "Done!"
 
 ## build_payment: builds the payment binary as a linux executable
 build_payment:
 	@echo "Building payment binary..."
-	cd ../payment && env GOOS=linux CGO_ENABLED=0 go build  -o ${PAYMENT_BINARY} ./cmd
+	cd ../payment && go get github.com/ayuved/microservices-helper/domain && go get github.com/ayuved/microservices-helper/adapters && go mod tidy && env GOOS=linux CGO_ENABLED=0 go build  -o ${PAYMENT_BINARY} ./cmd
 	@echo "Done!"
 ## build_logservice gger: builds the logger binary as a linux executable
 build_logservice:
 	@echo "Building logservice binary..."
-	cd ../logservice && env GOOS=linux CGO_ENABLED=0 go build  -o ${LOGSERVICE_BINARY} ./cmd
+	cd ../logservice && go get github.com/ayuved/microservices-helper/domain && go get github.com/ayuved/microservices-helper/adapters && go mod tidy && env GOOS=linux CGO_ENABLED=0 go build  -o ${LOGSERVICE_BINARY} ./cmd
 	@echo "Done!"
 
 ## build_listener: builds the listener binary as a linux executable
@@ -107,19 +107,19 @@ docpush:
 	@echo "Pushing to docker hub..."
 
 
-	cd ../broker && docker build --no-cache -t 909007/broker:latest .
+	cd ../broker && docker build  -t 909007/broker:latest .
 	# docker tag broker 909007/broker:latest
 	docker push 909007/broker:latest
 
-	cd ../order && docker build --no-cache -t 909007/order:latest .
+	cd ../order && docker build -t 909007/order:latest .
 	# docker tag order 909007/order:latest
 	docker push 909007/order:latest
 
-	cd ../payment && docker build --no-cache -t 909007/payment:latest .
+	cd ../payment && docker build -t 909007/payment:latest .
 	# docker tag payment 909007/payment:latest
 	docker push 909007/payment:latest
 
-	cd ../logservice && docker build --no-cache -t 909007/logservice:latest .
+	cd ../logservice && docker build -t 909007/logservice:latest .
 	# docker tag logservice 909007/logservice:latest
 	docker push 909007/logservice:latest
 

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/ayuved/microservices-proto/golang/order"
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"

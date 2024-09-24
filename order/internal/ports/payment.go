@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 )
 
 type PaymentPort interface {

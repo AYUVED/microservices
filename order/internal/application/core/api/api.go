@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 	"github.com/ayuved/microservices/order/internal/ports"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
@@ -22,7 +22,6 @@ func NewApplication(db ports.DBPort, payment ports.PaymentPort) *Application {
 		payment: payment,
 	}
 }
-
 func (a Application) PlaceOrder(ctx context.Context, order domain.Order) (domain.Order, error) {
 	log.Printf("PlaceOrder1: %v\n", order)
 	err := a.db.Save(ctx, &order)

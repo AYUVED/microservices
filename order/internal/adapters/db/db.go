@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
-
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"time"
+"github.com/ayuved/microservices-helper/domain"
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
 
 	"gorm.io/driver/postgres"
@@ -82,15 +82,31 @@ func NewAdapter(dataSourceUrl string) (*Adapter, error) {
 	if openErr != nil {
 		return nil, fmt.Errorf("db connection error: %v", openErr)
 	}
-	log.Printf("DB: %v\n", db)
+
+	// Set connection pool parameters
+	sqlDB, err := db.DB() // Get the underlying *sql.DB
+	if err != nil {
+		return nil, fmt.Errorf("failed to get sql.DB: %v", err)
+	}
+	//defer sqlDB.Close()
+	// Set connection pool parameters
+	sqlDB.SetMaxOpenConns(25)
+	sqlDB.SetMaxIdleConns(25)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+
+	if err := sqlDB.PingContext(ctx); err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Connected to the database")
 	if err := db.Use(otelgorm.NewPlugin(otelgorm.WithDBName("order"))); err != nil {
 		return nil, fmt.Errorf("db otel plugin error: %v", err)
 	}
-	log.Printf("DB: %v\n", db)
-	err := db.AutoMigrate(&Order{}, OrderItem{})
+	err = db.AutoMigrate(&Order{}, OrderItem{})
 	if err != nil {
 		return nil, fmt.Errorf("db migration error: %v", err)
 	}
-	log.Printf("DB: %v\n", db)
 	return &Adapter{db: db}, nil
 }

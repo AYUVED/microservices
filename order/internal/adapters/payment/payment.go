@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/ayuved/microservices-proto/golang/payment"
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"

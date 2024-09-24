@@ -23,6 +23,8 @@ spec:
               value:  "8082"
             - name: ORDER_SERVICE_URL
               value:  "order:8080"
+            - name: LOG_SERVICE_URL
+              value:  "logservice:8083"
             - name: ENV
               value:  "prod"
           resources:

@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"log"
 
 	"github.com/ayuved/microservices-helper/domain"
 	"github.com/ayuved/microservices/logservice/internal/ports"
@@ -18,6 +19,7 @@ func NewApplication(db ports.DBPort) *Application {
 }
 
 func (a Application) Add(ctx context.Context, logservice domain.Logservice) (domain.Logservice, error) {
+	log.Println("Adding logservice", logservice)
 	err := a.db.Add(ctx, &logservice)
 	if err != nil {
 		return domain.Logservice{}, err

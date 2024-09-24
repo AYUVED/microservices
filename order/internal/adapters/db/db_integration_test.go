@@ -6,8 +6,7 @@ import (
 	"log"
 	"testing" // Add missing import for "testing"
 	"time"
-
-	"github.com/ayuved/microservices/order/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 	"github.com/docker/go-connections/nat"
 	"github.com/stretchr/testify/suite"
 	"github.com/testcontainers/testcontainers-go"

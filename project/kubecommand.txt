@@ -48,3 +48,11 @@ host  all  all 0.0.0.0/0 md5
 
 echo -n "your-postgres-password" | base64
 
+
+ kubectl run -it --rm --restart=Never test-pod --image=alpine -- sh
+   # Inside the pod, use curl to test the service
+   apk add --no-cache curl
+   curl http://logservice:8083
+
+      apk add --no-cache wget
+   wget http://logservice:8083
