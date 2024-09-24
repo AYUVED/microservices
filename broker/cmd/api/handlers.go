@@ -94,15 +94,13 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
-	log.Printf("Order1: %v\n", o)
 
+	log.Printf("PlaceOrder: %v\n", o)
 	// var orderPayload OrderPayload
-	log.Printf("Order2: %v\n", o)
 	orderdapter, err := adapters.NewOrderAdapter(config.GetOrderServiceUrl())
 	if err != nil {
 		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
-	log.Printf("Order3: %v\n", o)
 	// convert orderPayload to a format that the order service can understand
 	ctx := context.TODO()
 	var orderItems []domain.OrderItem
@@ -113,46 +111,19 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 			Quantity:    orderItem.Quantity,
 		})
 	}
-	log.Printf("Order4: %v\n", o)
 	order := domain.Order{
 		CustomerID: o.CustomerID,
 		Status:     o.Status,
 		OrderItems: orderItems,
 	}
 	err = orderdapter.Order(ctx, &order) // Assign the returned value to a variable
-	log.Printf("Order6: %v\n", order)
+	log.Printf("PlaceOrder: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
-	// err := app.readJSON(w, r, &orderPayload)
-	// if err != nil {
-	// 	app.errorJSON(w, err)
-	// 	return
-	// }
-
-	// conn, err := grpc.Dial("logger-service:50001", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
-	// if err != nil {
-	// 	app.errorJSON(w, err)
-	// 	return
-	// }
-	// defer conn.Close()
-
-	// c := logs.NewLogServiceClient(conn)
-	// ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	// defer cancel()
-
-	// _, err = c.WriteLog(ctx, &logs.LogRequest{
-	// 	LogEntry: &logs.Log{
-	// 		Name: requestPayload.Log.Name,
-	// 		Data: requestPayload.Log.Data,
-	// 	},
-	// })
-	// if err != nil {
-	// 	app.errorJSON(w, err)
-	// 	return
-	// }
-
+	log.Printf("PlaceOrder: %v\n", order)
+	
 	var payload jsonResponse
 	payload.Error = false
 	payload.Message = strconv.FormatInt(order.ID, 10)

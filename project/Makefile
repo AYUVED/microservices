@@ -38,6 +38,8 @@ down:
 	docker-compose down
 	@echo "Done!"
 
+
+
 ## build_broker: builds the broker binary as a linux executable
 build_broker:
 	@echo "Building broker binary..."

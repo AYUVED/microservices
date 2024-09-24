@@ -3,8 +3,8 @@ package grpc
 import (
 	"context"
 
-	"github.com/ayuved/microservices-proto/golang/order"
 	"github.com/ayuved/microservices-helper/domain"
+	"github.com/ayuved/microservices-proto/golang/order"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
@@ -20,6 +20,7 @@ func (a Adapter) Create(ctx context.Context, request *order.CreateOrderRequest) 
 			Description: "user_id is required",
 		})
 	}
+	
 	if len(request.OrderItems) == 0 {
 		validationErrors = append(validationErrors, &errdetails.BadRequest_FieldViolation{
 			Field:       "order_items",
