@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: listener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: listener
+  template:
+    metadata:
+      labels:
+        app: listener
+    spec:
+      containers:
+      - name: listener
+        image: "909007/listener:latest"
+        imagePullPolicy:  Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8085
+        env:
+          - name: APPLICATION_PORT
+            value:  "8081"
+          - name: QUEUE_URL
+            value:  "amqp://guest:guest@host.minikube.internal:5672/"
+          - name: ENV
+            value:  "prod"
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: listener
+  labels:
+    app:  listener
+spec:
+  selector:
+    app: listener
+  ports:
+    - protocol: TCP
+      port: 8085
+      targetPort: 8085
+  type: LoadBalancer

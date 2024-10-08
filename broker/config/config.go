@@ -27,6 +27,9 @@ func GetOrderServiceUrl() string {
 func GetLogServiceUrl() string {
 	return getEnvironmentValue("LOG_SERVICE_URL")
 }
+func GetQueueUrl() string {
+	return getEnvironmentValue("QUEUE_URL")
+}
 func getEnvironmentValue(key string) string {
 	if os.Getenv(key) == "" {
 		log.Fatalf("%s environment variable is missing.", key)

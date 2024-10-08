@@ -1,7 +1,7 @@
-github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe h1:KGvSSY6ueBXqvUStJ6EYzxPBHoE/paOPwp2f/ssTECU=
-github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe/go.mod h1:pcYZYRxxe6hrCcz2ekrtpldxw7THMD22ahTRj7bQq2Y=
-github.com/ayuved/microservices-proto/golang/logservice v1.0.1 h1:5Ipa5rnwieHEcetvi9dhzXoq47iyPIxjJkTuuK8zqWY=
-github.com/ayuved/microservices-proto/golang/logservice v1.0.1/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
+github.com/ayuved/microservices-helper v0.0.0-20241008011011-d8297cf964bf h1:U13fS+rV6wanUlyAaenYgSKZStyF7cQ72etFFw/QgFo=
+github.com/ayuved/microservices-helper v0.0.0-20241008011011-d8297cf964bf/go.mod h1:IzDKpfMO9mTidXZzPoXVx0cTHl4JNsjpnKB5GoQrj2Y=
+github.com/ayuved/microservices-proto/golang/logservice v1.0.5 h1:js+pgAtBnQ9IUyEIeLxVv87EAY1F7a5IRNk1F5OXXNs=
+github.com/ayuved/microservices-proto/golang/logservice v1.0.5/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

@@ -3,7 +3,7 @@ module github.com/ayuved/microservices/payment
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-proto/golang/payment v1.0.1
+	github.com/ayuved/microservices-proto/golang/payment v1.0.5
 	go.opentelemetry.io/otel v1.30.0
 	go.opentelemetry.io/otel/trace v1.30.0
 	gorm.io/driver/postgres v1.5.9
@@ -28,6 +28,7 @@ require (
 )
 
 require (
+	github.com/ayuved/microservices-helper v0.0.0-20241008011011-d8297cf964bf
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/sirupsen/logrus v1.9.3

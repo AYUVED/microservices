@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 	"testing" // Add missing import for "testing"
-	"time"
+
+_ "github.com/lib/pq"
 	"github.com/ayuved/microservices-helper/domain"
 	"github.com/docker/go-connections/nat"
 	"github.com/stretchr/testify/suite"
@@ -20,34 +21,36 @@ type OrderDatabaseTestSuite struct {
 
 func (o *OrderDatabaseTestSuite) SetupSuite() {
 	ctx := context.Background()
-	port := "3306/tcp"
+	port := "5432/tcp"
 	dbURL := func(port nat.Port) string {
-		return fmt.Sprintf("root:s3cr3t@tcp(localhost:%s)/orders?charset=utf8mb4&parseTime=True&loc=Local", port.Port())
+		return fmt.Sprintf("postgres://postgres:password@localhost:%s/orders?sslmode=disable", port.Port())
 	}
 	req := testcontainers.ContainerRequest{
-		Image:        "docker.io/mysql:8.0.30",
+		Image:        "docker.io/postgres:15.0",
 		ExposedPorts: []string{port},
 		Env: map[string]string{
-			"MYSQL_ROOT_PASSWORD": "s3cr3t",
-			"MYSQL_DATABASE":      "orders",
+			"POSTGRES_PASSWORD": "password",
+			"POSTGRES_DB":      "orders",
 		},
-		WaitingFor: wait.ForSQL(nat.Port(port), "mysql", dbURL).Timeout(time.Second * 30),
+		WaitingFor: wait.ForSQL(nat.Port(port), "postgres", func(host string, port nat.Port) string {
+			return dbURL(port)
+		}),
 	}
-	mysqlContainer, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
+	postgresContainer, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
 		ContainerRequest: req,
 		Started:          true,
 	})
 	if err != nil {
 		log.Fatal("Failed to start Mysql.", err)
 	}
-	endpoint, _ := mysqlContainer.Endpoint(ctx, "")
-	o.DataSourceUrl = fmt.Sprintf("root:s3cr3t@tcp(%s)/orders?charset=utf8mb4&parseTime=True&loc=Local", endpoint)
+	endpoint, _ := postgresContainer.Endpoint(ctx,"")
+	o.DataSourceUrl = fmt.Sprintf("postgres://postgres:password@%s/orders?sslmode=disable", endpoint)
 }
 
 func (o *OrderDatabaseTestSuite) Test_Should_Save_Order() {
 	adapter, err := NewAdapter(o.DataSourceUrl)
 	o.Nil(err)
-	saveErr := adapter.Save(&domain.Order{})
+	saveErr := adapter.Save(context.Background(), &domain.Order{})
 	o.Nil(saveErr)
 }
 
@@ -60,8 +63,9 @@ func (o *OrderDatabaseTestSuite) Test_Should_Get_Order() {
 			UnitPrice:   1.32,
 		},
 	})
-	adapter.Save(&order)
-	ord, _ := adapter.Get(order.ID)
+	ctx := context.Background()
+	adapter.Save(ctx, &order)
+	ord, _ := adapter.Get(ctx, order.ID)
 	o.Equal(int64(2), ord.CustomerID)
 }
 

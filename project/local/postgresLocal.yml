@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_MULTIPLE_DATABASES=orders,payments
+      - POSTGRES_MULTIPLE_DATABASES=orders,payments,shipping
     volumes:
       - ./db.sql:/docker-entrypoint-initdb.d/db.sql
       - ./postgres-data:/var/lib/postgresql/data

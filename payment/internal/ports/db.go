@@ -2,7 +2,7 @@ package ports
 
 import (
 	"context"
-	"github.com/ayuved/microservices/payment/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 )
 
 type DBPort interface {

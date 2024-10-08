@@ -1,2 +1,4 @@
 CREATE DATABASE payments;
 CREATE DATABASE orders;
+CREATE DATABASE shipping;
+

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping
+  template:
+    metadata:
+      labels:
+        app: shipping
+    spec:
+      containers:
+        - name: shipping
+          image: "909007/shipping:latest"
+          imagePullPolicy:  Always
+          ports:
+            - containerPort: 8084
+          env:
+            - name: APPLICATION_PORT
+              value:  "8084"
+
+            - name: DATA_SOURCE_URL
+              value:  "postgresql://postgres:password@host.minikube.internal:5432/shipping"
+            - name: ENV
+              value:  "prod"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping
+  labels:
+    app:  ordshippinger
+spec:
+  selector:
+    app: shipping
+  ports:
+    - protocol: TCP
+      port: 8084
+      targetPort: 8084
+  type: LoadBalancer

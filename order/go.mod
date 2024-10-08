@@ -15,6 +15,8 @@ require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/Microsoft/hcsshim v0.11.4 // indirect
+	github.com/ayuved/microservices-proto/golang/logservice v1.0.1 // indirect
+	github.com/ayuved/microservices-proto/golang/shipping v1.0.3 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/containerd/containerd v1.7.15 // indirect
 	github.com/containerd/log v0.1.0 // indirect
@@ -27,6 +29,7 @@ require (
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgx/v5 v5.5.5 // indirect
@@ -61,12 +64,13 @@ require (
 )
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20240924015411-3fb9edaa3cbe
-	github.com/ayuved/microservices-proto/golang/order v1.0.2
+	github.com/ayuved/microservices-helper v0.0.0-20241008011011-d8297cf964bf
+	github.com/ayuved/microservices-proto/golang/order v1.0.5
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/lib/pq v1.10.9
 	github.com/sirupsen/logrus v1.9.3
 	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.3.0
 	go.opentelemetry.io/otel v1.30.0

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/ayuved/microservices-proto/golang/payment"
-	"github.com/ayuved/microservices/payment/internal/application/core/domain"
+	"github.com/ayuved/microservices-helper/domain"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

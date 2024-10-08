@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 	"github.com/ayuved/microservices-helper/adapters"
 	"github.com/ayuved/microservices-helper/domain"
 	"github.com/ayuved/microservices/broker/config"
+	"github.com/ayuved/microservices/broker/event"
 )
 
 // RequestPayload describes the JSON that this service accepts as an HTTP Post request
@@ -85,6 +87,8 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 		app.logItem(w, requestPayload.Log)
 	// case "mail":
 	// 	app.sendMail(w, requestPayload.Mail)
+	case "logViaRabbit":
+		app.logEventViaRabbit(w, requestPayload.Log)
 	case "order":
 		log.Printf("Order: %v\n", requestPayload.Order)
 		app.PlaceOrder(w, requestPayload.Order)
@@ -116,7 +120,7 @@ func (app *Config) PlaceOrder(w http.ResponseWriter, o OrderPayload) {
 		Status:     o.Status,
 		OrderItems: orderItems,
 	}
-	res,err := orderdapter.CreateOrder(ctx, &order) // Assign the returned value to a variable
+	res, err := orderdapter.CreateOrder(ctx, &order) // Assign the returned value to a variable
 	log.Printf("PlaceOrder: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
@@ -252,44 +256,44 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 
 // }
 
-// // logEventViaRabbit logs an event using the logger-service. It makes the call by pushing the data to RabbitMQ.
-// func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
-// 	err := app.pushToQueue(l.Name, l.Data)
-// 	if err != nil {
-// 		app.errorJSON(w, err)
-// 		return
-// 	}
+// logEventViaRabbit logs an event using the logger-service. It makes the call by pushing the data to RabbitMQ.
+func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
+	err := app.pushToQueue(l.Name, l.Data)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
 
-// 	var payload jsonResponse
-// 	payload.Error = false
-// 	payload.Message = "logged via RabbitMQ"
+	var payload jsonResponse
+	payload.Error = false
+	payload.Message = "logged via RabbitMQ"
 
-// 	app.writeJSON(w, http.StatusAccepted, payload)
-// }
+	app.writeJSON(w, http.StatusAccepted, payload)
+}
 
-// // pushToQueue pushes a message into RabbitMQ
-// func (app *Config) pushToQueue(name, msg string) error {
-// 	emitter, err := event.NewEventEmitter(app.Rabbit)
-// 	if err != nil {
-// 		return err
-// 	}
+// pushToQueue pushes a message into RabbitMQ
+func (app *Config) pushToQueue(name, msg string) error {
+	emitter, err := event.NewEventEmitter(app.Rabbit)
+	if err != nil {
+		return err
+	}
 
-// 	payload := LogPayload{
-// 		Name: name,
-// 		Data: msg,
-// 	}
+	payload := LogPayload{
+		Name: name,
+		Data: msg,
+	}
 
-// 	j, err := json.MarshalIndent(&payload, "", "\t")
-// 	if err != nil {
-// 		return err
-// 	}
+	j, err := json.MarshalIndent(&payload, "", "\t")
+	if err != nil {
+		return err
+	}
 
-// 	err = emitter.Push(string(j), "log.INFO")
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
+	err = emitter.Push(string(j), "log.INFO")
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 type RPCPayload struct {
 	Name string
