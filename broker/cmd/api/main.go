@@ -5,6 +5,7 @@ import (
 	"log"
 	"math"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/ayuved/microservices/broker/config"
@@ -19,15 +20,15 @@ type Config struct {
 
 func main() {
 	// try to connect to rabbitmq
-	// rabbitConn, err := connect()
-	// if err != nil {
-	// 	log.Println(err)
-	// 	os.Exit(1)
-	// }
-	// defer rabbitConn.Close()
+	rabbitConn, err := connect()
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+	defer rabbitConn.Close()
 
 	app := Config{
-		// Rabbit: rabbitConn,
+		Rabbit: rabbitConn,
 	}
 	port := config.GetApplicationPort()
 	log.Printf("Starting broker1 service on port1 %d\n", port)
@@ -40,7 +41,7 @@ func main() {
 	}
 
 	// start the server
-	err := srv.ListenAndServe()
+	err = srv.ListenAndServe()
 	if err != nil {
 		log.Panic(err)
 	}

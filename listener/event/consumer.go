@@ -1,17 +1,19 @@
 package event
 
 import (
-	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
-	"net/http"
 
+	"github.com/ayuved/microservices-helper/adapters"
+	"github.com/ayuved/microservices-helper/domain"
+	"github.com/ayuved/microservices/listener/config"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type Consumer struct {
-	conn *amqp.Connection
+	conn      *amqp.Connection
 	queueName string
 }
 
@@ -78,7 +80,7 @@ func (consumer *Consumer) Listen(topics []string) error {
 		for d := range messages {
 			var payload Payload
 			_ = json.Unmarshal(d.Body, &payload)
-
+			log.Printf("Payload: %v\n", payload)
 			go handlePayload(payload)
 		}
 	}()
@@ -90,8 +92,10 @@ func (consumer *Consumer) Listen(topics []string) error {
 }
 
 func handlePayload(payload Payload) {
+	log.Printf("HandlePayload: %v\n", payload)
 	switch payload.Name {
-	case "log", "event":
+	case "logViaRabbit", "event":
+		log.Printf("HandlePayload: %v\n", payload)
 		// log whatever we get
 		err := logEvent(payload)
 		if err != nil {
@@ -112,28 +116,25 @@ func handlePayload(payload Payload) {
 }
 
 func logEvent(entry Payload) error {
-	jsonData, _ := json.MarshalIndent(entry, "", "\t")
-
-	logServiceURL := "http://logger-service/log"
-
-	request, err := http.NewRequest("POST", logServiceURL, bytes.NewBuffer(jsonData))
+	log.Printf("LogEvent: %v\n", entry)
+	//jsonData, _ := json.MarshalIndent(entry, "", "\t")
+	logadapter, err := adapters.NewLogServiceAdapter(config.GetLogServiceUrl())
 	if err != nil {
-		return err
+		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
 	}
+	ctx := context.TODO()
 
-	request.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-
-	response, err := client.Do(request)
+	logservice := domain.Logservice{
+		App:  "Logentry.App",
+		Name: entry.Name,
+		Data: entry.Data,
+	}
+	log.Printf("Logservice1: %v\n", logservice)
+	err = logadapter.AddLog(ctx, &logservice) // Assign the returned value to a variable
+	log.Printf("Logservice2: %v\n", err)
 	if err != nil {
+		//app.errorJSON(w, err)
 		return err
 	}
-	defer response.Body.Close()
-
-	if response.StatusCode != http.StatusAccepted {
-		return err
-	}
-	
 	return nil
 }

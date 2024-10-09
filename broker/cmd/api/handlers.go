@@ -258,40 +258,47 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 
 // logEventViaRabbit logs an event using the logger-service. It makes the call by pushing the data to RabbitMQ.
 func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
+	log.Printf("LogEventViaRabbit1: %v\n", l)
+	log.Printf("Log 1: %v\n", l)
 	err := app.pushToQueue(l.Name, l.Data)
+	log.Printf("Log 2: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
 
+	log.Printf("LogEventViaRabbit3: %v\n", l)
 	var payload jsonResponse
 	payload.Error = false
 	payload.Message = "logged via RabbitMQ"
 
+	log.Printf("LogEventViaRabbit4: %v\n", payload)
 	app.writeJSON(w, http.StatusAccepted, payload)
 }
 
 // pushToQueue pushes a message into RabbitMQ
 func (app *Config) pushToQueue(name, msg string) error {
+	log.Printf("pushToQueue0: %v\n", name)
 	emitter, err := event.NewEventEmitter(app.Rabbit)
 	if err != nil {
 		return err
 	}
-
+	log.Printf("pushToQueue1: %v\n", name)
 	payload := LogPayload{
 		Name: name,
 		Data: msg,
 	}
-
+	log.Printf("pushToQueue2: %v\n", payload)
 	j, err := json.MarshalIndent(&payload, "", "\t")
 	if err != nil {
 		return err
 	}
-
+	log.Printf("pushToQueue3: %v\n", string(j))
 	err = emitter.Push(string(j), "log.INFO")
 	if err != nil {
 		return err
 	}
+	log.Printf("pushToQueue4: %v\n", err)
 	return nil
 }
 

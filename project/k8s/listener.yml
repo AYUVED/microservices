@@ -27,7 +27,9 @@ spec:
           - containerPort: 8085
         env:
           - name: APPLICATION_PORT
-            value:  "8081"
+            value:  "8085"
+          - name: LOG_SERVICE_URL
+            value:  "logservice:8083"
           - name: QUEUE_URL
             value:  "amqp://guest:guest@host.minikube.internal:5672/"
           - name: ENV
