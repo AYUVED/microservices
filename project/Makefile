@@ -51,7 +51,10 @@ build_proto:
 build_helper:
 	@echo "Building helper binary..."
 	cd ../../microservices-helper && go mod tidy && \
-	go get github.com/ayuved/microservices-proto@latest && \
+	go get github.com/ayuved/microservices-proto/golang/order@latest && \
+	go get github.com/ayuved/microservices-proto/golang/logservice@latest && \
+	go get github.com/ayuved/microservices-proto/golang/payment@latest && \
+	go get github.com/ayuved/microservices-proto/golang/shipping@latest && \
 	go mod tidy && \
 	env GOOS=linux CGO_ENABLED=0  && \
 	bash ./push.sh	;
@@ -97,7 +100,7 @@ build_shipping:
 ## build_logservice gger: builds the logger binary as a linux executable
 build_logservice:
 	@echo "Building logservice binary..."
-	cd ../logservice && go get github.com/ayuved/microservices-helper/domain@latest && \
+	cd ../logservice && go mod tidy && go get github.com/ayuved/microservices-helper/domain@latest && \
 	go get github.com/ayuved/microservices-proto/golang/logservice@latest && \
 	go get github.com/ayuved/microservices-helper/adapters@latest && go mod tidy && env GOOS=linux CGO_ENABLED=0 go build  -o ${LOGSERVICE_BINARY} ./cmd
 	@echo "Done!"

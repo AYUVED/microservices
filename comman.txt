@@ -84,3 +84,6 @@ docker-compose -f postgresLocal.yml up -d
 
 docker local mongo
 docker-compose -f mongoLocal.yml up -d
+
+
+sudo go clean -modcache

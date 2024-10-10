@@ -15,8 +15,8 @@ require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/Microsoft/hcsshim v0.11.4 // indirect
-	github.com/ayuved/microservices-proto/golang/logservice v1.0.1 // indirect
-	github.com/ayuved/microservices-proto/golang/shipping v1.0.3 // indirect
+	github.com/ayuved/microservices-proto/golang/logservice v1.0.9 // indirect
+	github.com/ayuved/microservices-proto/golang/shipping v1.0.9 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/containerd/containerd v1.7.15 // indirect
 	github.com/containerd/log v0.1.0 // indirect
@@ -64,8 +64,8 @@ require (
 )
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241008011011-d8297cf964bf
-	github.com/ayuved/microservices-proto/golang/order v1.0.5
+	github.com/ayuved/microservices-helper v0.0.0-20241010022403-ac39f80bde3e
+	github.com/ayuved/microservices-proto/golang/order v1.0.9
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

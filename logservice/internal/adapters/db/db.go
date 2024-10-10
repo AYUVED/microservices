@@ -14,10 +14,20 @@ import (
 )
 
 type Logservice struct {
-	ID   string
-	App  string
-	Name string
-	Data string
+	ID        string
+	App       string
+	Name      string
+	Type      string
+	Status    string
+	ProcessId string
+	Data      interface{}
+	User      string
+	CreatedAt time.Time
+	CreatedBy string
+	UpdatedAt time.Time
+	UpdatedBy string
+	DeletedAt time.Time
+	DeletedBy string
 }
 
 type Adapter struct {
@@ -35,10 +45,14 @@ func (a Adapter) Get(ctx context.Context, id string) (domain.Logservice, error) 
 	fmt.Printf("Found document: %+v\n", lsModel)
 
 	result := domain.Logservice{
-		ID:   lsModel.ID,
-		App:  lsModel.App,
-		Name: lsModel.Name,
-		Data: lsModel.Data,
+		ID:        lsModel.ID,
+		App:       lsModel.App,
+		Name:      lsModel.Name,
+		Type:      lsModel.Type,
+		Status:    lsModel.Status,
+		ProcessId: lsModel.ProcessId,
+		Data:      lsModel.Data.(string),
+		User:      lsModel.User,
 	}
 	return result, err
 }
@@ -46,15 +60,17 @@ func (a Adapter) Get(ctx context.Context, id string) (domain.Logservice, error) 
 func (a Adapter) Add(ctx context.Context, logservice *domain.Logservice) error {
 	log.Println("Inserting logservice", logservice)
 	logModel := Logservice{
-
-		App:  logservice.App,
-		Name: logservice.Name,
-		Data: logservice.Data,
+		App:       logservice.App,
+		Name:      logservice.Name,
+		Type:      logservice.Type,
+		Status:    logservice.Status,
+		ProcessId: logservice.ProcessId,
+		Data:      logservice,
+		CreatedAt: time.Now(),
+		CreatedBy: logservice.User,
 	}
 	log.Println("Inserting logservice", logModel)
 	insertResult, err := a.db.InsertOne(ctx, logModel)
-	log.Println("Inserting logservice", insertResult)
-	log.Println("Inserting logservice", err)
 	if err != nil {
 		log.Fatal(err)
 	}
