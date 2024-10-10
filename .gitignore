@@ -4,3 +4,4 @@
 .DS_Store
 resources/postgres-data
 project/postgres-data
+project/local/postgres-data
