@@ -54,8 +54,12 @@ type AuthPayload struct {
 // LogPayload is the embedded type (in RequestPayload) that describes a request to log something
 type LogPayload struct {
 	App  string `json:"app"`
-	Name string `json:"name"`
-	Data string `json:"data"`
+	Name string      `json:"name"`
+	Data interface{} `json:"data"`
+	Type string      `json:"type"`
+	Status string    `json:"status"`
+	ProcessId string  `json:"processId"`
+	User string      `json:"user"`
 }
 
 // Broker is a test handler, just to make sure we can hit the broker from a web client
@@ -149,19 +153,22 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 	ctx := context.TODO()
 
 	log.Printf("Log3: %v\n", l)
+	log.Printf("Log3: %v\n", l.Data)
 	logservice := domain.Logservice{
 		App:  l.App,
 		Name: l.Name,
-		Data: l.Data,
+		Data:     l.Data,
+		Type:     l.Type,
+		Status:   l.Status,
+		ProcessId: l.ProcessId,
+		User:      l.User,
 	}
-	log.Printf("Logservice1: %v\n", logservice)
+	log.Printf("Logservice123: %v\n", logservice.Data)
 	err = logadapter.AddLog(ctx, &logservice) // Assign the returned value to a variable
-	log.Printf("Logservice2: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
-	log.Printf("Logservice3: %v\n", logservice)
 
 }
 
@@ -260,7 +267,7 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
 	log.Printf("LogEventViaRabbit1: %v\n", l)
 	log.Printf("Log 1: %v\n", l)
-	err := app.pushToQueue(l.Name, l.Data)
+	err := app.pushToQueue(l.Name, l.Data, l.Type, l.Status, l.ProcessId, l.User)
 	log.Printf("Log 2: %v\n", err)
 	if err != nil {
 		app.errorJSON(w, err)
@@ -277,7 +284,7 @@ func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
 }
 
 // pushToQueue pushes a message into RabbitMQ
-func (app *Config) pushToQueue(name, msg string) error {
+func (app *Config) pushToQueue(name string, msg interface{}, t string, s string, p string, u string) error {
 	log.Printf("pushToQueue0: %v\n", name)
 	emitter, err := event.NewEventEmitter(app.Rabbit)
 	if err != nil {
@@ -287,6 +294,10 @@ func (app *Config) pushToQueue(name, msg string) error {
 	payload := LogPayload{
 		Name: name,
 		Data: msg,
+		Type: t,
+		Status: s,
+		ProcessId: p,
+		User: u,
 	}
 	log.Printf("pushToQueue2: %v\n", payload)
 	j, err := json.MarshalIndent(&payload, "", "\t")

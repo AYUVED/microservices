@@ -40,8 +40,14 @@ func (consumer *Consumer) setup() error {
 }
 
 type Payload struct {
-	Name string `json:"name"`
-	Data string `json:"data"`
+	App       string `json:"app"`
+	Name      string `json:"name"`
+	Data      interface{} `json:"data"`
+	ProcessId string      `json:"process_id"`
+	Status    string      `json:"status"`
+	Type      string      `json:"type"`
+	User      string      `json:"user"`
+
 }
 
 func (consumer *Consumer) Listen(topics []string) error {
@@ -128,6 +134,10 @@ func logEvent(entry Payload) error {
 		App:  "Logentry.App",
 		Name: entry.Name,
 		Data: entry.Data,
+		ProcessId:  entry.ProcessId,
+		Status:    "pending",
+		Type:      "event",
+		User:      "listener",
 	}
 	log.Printf("Logservice1: %v\n", logservice)
 	err = logadapter.AddLog(ctx, &logservice) // Assign the returned value to a variable

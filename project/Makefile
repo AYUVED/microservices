@@ -8,7 +8,7 @@ AUTH_BINARY=authApp
 MAIL_BINARY=mailApp
 LOGGER_BINARY=loggerApp
 LISTENER_BINARY=listener
-PROTO_VERSION ?= v1.0.0
+PROTO_VERSION ?= v1.0.13
 ## up: starts all containers in the background without forcing build
 up:
 	@echo "Starting Docker images..."
@@ -45,7 +45,38 @@ build_proto:
 	sudo ./protoc.sh order $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
 	sudo ./protoc.sh logservice $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
 	sudo ./protoc.sh payment $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
-	sudo ./protoc.sh shipping $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
+	sudo ./protoc.sh shipping $(PROTO_VERSION) nileshdt nileshdt@gmail.com && 
+	@echo "Done!"
+
+build_protorefresh:
+	@echo "Refreshing proto..."
+	cd ../../microservices-helper && \
+	go get github.com/ayuved/microservices-proto/golang/order@latest && \
+	go get github.com/ayuved/microservices-proto/golang/logservice@latest && \
+	go get github.com/ayuved/microservices-proto/golang/payment@latest && \
+	go get github.com/ayuved/microservices-proto/golang/shipping@latest && \
+	go mod tidy && \
+	cd ../microservices/logservice && \
+	go get github.com/ayuved/microservices-proto/golang/logservice@latest && go mod tidy && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest && \
+	cd ../order && \
+	go get github.com/ayuved/microservices-proto/golang/order@latest && go mod tidy && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest && \
+	cd ../payment && \
+	go get github.com/ayuved/microservices-proto/golang/payment@latest && go mod tidy && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest && \
+	cd ../shipping && \
+	go get github.com/ayuved/microservices-proto/golang/shipping@latest && go mod tidy && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest && \
+	cd ../listener && \
+	go mod tidy && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest && \
+	go mod tidy ;
 	@echo "Done!"
 
 build_helper:

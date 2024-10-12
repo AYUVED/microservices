@@ -65,7 +65,7 @@ func (a Adapter) Add(ctx context.Context, logservice *domain.Logservice) error {
 		Type:      logservice.Type,
 		Status:    logservice.Status,
 		ProcessId: logservice.ProcessId,
-		Data:      logservice,
+		Data:      logservice.Data,
 		CreatedAt: time.Now(),
 		CreatedBy: logservice.User,
 	}

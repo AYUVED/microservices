@@ -3,7 +3,7 @@ module github.com/ayuved/microservices/payment
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-proto/golang/payment v1.0.9
+	github.com/ayuved/microservices-proto/golang/payment v1.0.13
 	go.opentelemetry.io/otel v1.30.0
 	go.opentelemetry.io/otel/trace v1.30.0
 	gorm.io/driver/postgres v1.5.9
@@ -24,11 +24,11 @@ require (
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
-	google.golang.org/protobuf v1.34.2 // indirect
+	google.golang.org/protobuf v1.35.1 // indirect
 )
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241010022403-ac39f80bde3e
+	github.com/ayuved/microservices-helper v0.0.0-20241011190240-3639f118c14f
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/sirupsen/logrus v1.9.3

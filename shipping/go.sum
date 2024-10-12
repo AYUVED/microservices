@@ -1,7 +1,7 @@
-github.com/ayuved/microservices-helper v0.0.0-20241010022403-ac39f80bde3e h1:/UHCzSEclWkNPtzgtHbr5B9nJleH55E8RxYM6XONiPA=
-github.com/ayuved/microservices-helper v0.0.0-20241010022403-ac39f80bde3e/go.mod h1:YdP7kQiURSshXmH0/eq16i2+M7zTqKP1LaQtBx41YT8=
-github.com/ayuved/microservices-proto/golang/shipping v1.0.9 h1:GZNniDIVjgjexndJQwXfuWPtZ26FOv8EDNJ54kuW/Oo=
-github.com/ayuved/microservices-proto/golang/shipping v1.0.9/go.mod h1:cmLkDCH9AbEwIyc8gDM1EG8LqQ0KpO17P/1uoMeD7gs=
+github.com/ayuved/microservices-helper v0.0.0-20241011190240-3639f118c14f h1:YJD3CbZVDI8fCLLKjcJqhfS7Yi0TZ41adlq7OYwcvkA=
+github.com/ayuved/microservices-helper v0.0.0-20241011190240-3639f118c14f/go.mod h1:yX3TIroq5HNoxpaKdNWxRJslcl9+pEAL2iRJ5XRJD6k=
+github.com/ayuved/microservices-proto/golang/shipping v1.0.13 h1:MgboOhxtnJCAczAonRDgl+K7RSQFX8hGwbJpYDCf0Dk=
+github.com/ayuved/microservices-proto/golang/shipping v1.0.13/go.mod h1:cmLkDCH9AbEwIyc8gDM1EG8LqQ0KpO17P/1uoMeD7gs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -66,8 +66,8 @@ google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 h1:
 google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1/go.mod h1:UqMtugtsSgubUsoxbuAoiCXvqvErP7Gf0so0mK9tHxU=
 google.golang.org/grpc v1.66.2 h1:3QdXkuq3Bkh7w+ywLdLvM56cmGvQHUMZpiCzt6Rqaoo=
 google.golang.org/grpc v1.66.2/go.mod h1:s3/l6xSSCURdVfAnL+TqCNMyTDAGN6+lZeVxnZR128Y=
-google.golang.org/protobuf v1.34.2 h1:6xV6lTsCfpGD21XK49h7MhtcApnLqkfYgPcdHftf6hg=
-google.golang.org/protobuf v1.34.2/go.mod h1:qYOHts0dSfpeUzUFpOMr/WGzszTmLH+DiWniOlNbLDw=
+google.golang.org/protobuf v1.35.1 h1:m3LfL6/Ca+fqnjnlqQXNpFPABW1UD7mjh8KO2mKFytA=
+google.golang.org/protobuf v1.35.1/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
