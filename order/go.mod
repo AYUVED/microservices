@@ -15,8 +15,9 @@ require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/Microsoft/hcsshim v0.11.4 // indirect
-	github.com/ayuved/microservices-proto/golang/logservice v1.0.13 // indirect
-	github.com/ayuved/microservices-proto/golang/shipping v1.0.13 // indirect
+	github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0 // indirect
+	github.com/ayuved/microservices-proto/golang/logservice v1.0.17 // indirect
+	github.com/ayuved/microservices-proto/golang/shipping v1.0.17 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/containerd/containerd v1.7.15 // indirect
 	github.com/containerd/log v0.1.0 // indirect
@@ -64,8 +65,8 @@ require (
 )
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241011190240-3639f118c14f
-	github.com/ayuved/microservices-proto/golang/order v1.0.13
+	github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f
+	github.com/ayuved/microservices-proto/golang/order v1.0.17
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -82,7 +83,7 @@ require (
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1
-	google.golang.org/grpc v1.66.2
+	google.golang.org/grpc v1.67.1
 	google.golang.org/protobuf v1.35.1 // indirect
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.10

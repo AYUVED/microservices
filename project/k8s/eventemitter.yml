@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventemitter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventemitter
+  template:
+    metadata:
+      labels:
+        app: eventemitter
+    spec:
+      containers:
+      - name: eventemitter
+        image: "909007/eventemitter:latest"
+        imagePullPolicy:  Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"
+        ports:
+          - containerPort: 8086
+        env:
+          - name: APPLICATION_PORT
+            value:  "8086"
+          - name: EVENT_SOURCE_URL
+            value:  "amqp://guest:guest@rabbitmq"
+          - name: ENV
+            value:  "prod"
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: eventemitter
+  labels:
+    app:  eventemitter
+spec:
+  selector:
+    app: eventemitter
+  ports:
+    - protocol: TCP
+      port: 8086
+      targetPort: 8086
+  type: NodePort

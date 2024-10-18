@@ -3,18 +3,19 @@ module github.com/ayuved/microservices/broker
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241011190240-3639f118c14f
-	github.com/ayuved/microservices-proto/golang/order v1.0.13
+	github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f
+	github.com/ayuved/microservices-proto/golang/order v1.0.17
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/go-chi/cors v1.2.1
 	github.com/rabbitmq/amqp091-go v1.10.0
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.55.0
-	google.golang.org/grpc v1.66.2
+	google.golang.org/grpc v1.67.1
 )
 
 require (
-	github.com/ayuved/microservices-proto/golang/logservice v1.0.13 // indirect
-	github.com/ayuved/microservices-proto/golang/shipping v1.0.13 // indirect
+	github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0 // indirect
+	github.com/ayuved/microservices-proto/golang/logservice v1.0.17 // indirect
+	github.com/ayuved/microservices-proto/golang/shipping v1.0.17 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect
 )
 

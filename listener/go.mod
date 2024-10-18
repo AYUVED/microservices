@@ -3,12 +3,12 @@ module github.com/ayuved/microservices/listener
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241011185040-807f2dff45dc
+	github.com/ayuved/microservices-helper v0.0.0-20241012232452-b2fe498179e5
 	github.com/rabbitmq/amqp091-go v1.3.4
 )
 
 require (
-	github.com/ayuved/microservices-proto/golang/logservice v1.0.12 // indirect
+	github.com/ayuved/microservices-proto/golang/logservice v1.0.13 // indirect
 	github.com/ayuved/microservices-proto/golang/order v1.0.13 // indirect
 	github.com/ayuved/microservices-proto/golang/shipping v1.0.13 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect

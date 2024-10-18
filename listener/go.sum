@@ -1,9 +1,9 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/ayuved/microservices-helper v0.0.0-20241011185040-807f2dff45dc h1:dQjIric8HTHZ6zJdv+Ocp6M3paviDbksGqAFH/AzQ4E=
-github.com/ayuved/microservices-helper v0.0.0-20241011185040-807f2dff45dc/go.mod h1:a1uxj6D5hponf0xO/Mfksw4FAabaxqiNplKRGqP7Kt0=
-github.com/ayuved/microservices-proto/golang/logservice v1.0.12 h1:k3JcBFXLIrNl04UMrQ5hPvkFOXMwjzPDI3DNd+kQy3Y=
-github.com/ayuved/microservices-proto/golang/logservice v1.0.12/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
+github.com/ayuved/microservices-helper v0.0.0-20241012232452-b2fe498179e5 h1:KnP8VSBZi+LFsjYMuUVsj+DI28D0Vt3OARiujdtTHPM=
+github.com/ayuved/microservices-helper v0.0.0-20241012232452-b2fe498179e5/go.mod h1:yX3TIroq5HNoxpaKdNWxRJslcl9+pEAL2iRJ5XRJD6k=
+github.com/ayuved/microservices-proto/golang/logservice v1.0.13 h1:ZdS52odeU8OPzY87m2j2I0KcKLbkvKlATPDCnvJJMWk=
+github.com/ayuved/microservices-proto/golang/logservice v1.0.13/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
 github.com/ayuved/microservices-proto/golang/order v1.0.13 h1:SeoxoPCH8wkzXTw3nar1W/o3zmTQo6oAFs2wUIFuFUI=
 github.com/ayuved/microservices-proto/golang/order v1.0.13/go.mod h1:8LZDb+XhykqRYOJ36zJHD7em/y0G6LQGGIHVjBnjO7g=
 github.com/ayuved/microservices-proto/golang/shipping v1.0.13 h1:MgboOhxtnJCAczAonRDgl+K7RSQFX8hGwbJpYDCf0Dk=

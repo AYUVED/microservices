@@ -3,15 +3,15 @@ module github.com/ayuved/microservices/logservice
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241011190240-3639f118c14f
-	github.com/ayuved/microservices-proto/golang/logservice v1.0.13
+	github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f
+	github.com/ayuved/microservices-proto/golang/logservice v1.0.17
 	github.com/sirupsen/logrus v1.9.3
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.55.0
 	go.opentelemetry.io/otel v1.30.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/sdk v1.30.0
 	go.opentelemetry.io/otel/trace v1.30.0
-	google.golang.org/grpc v1.66.2
+	google.golang.org/grpc v1.67.1
 )
 
 require (

@@ -8,7 +8,8 @@ AUTH_BINARY=authApp
 MAIL_BINARY=mailApp
 LOGGER_BINARY=loggerApp
 LISTENER_BINARY=listener
-PROTO_VERSION ?= v1.0.13
+EVENTEMITTER_BINARY=eventEmitter
+PROTO_VERSION ?= v1.0.17
 ## up: starts all containers in the background without forcing build
 up:
 	@echo "Starting Docker images..."
@@ -16,14 +17,14 @@ up:
 	@echo "Docker images started!"
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build:  build_helper build_broker build_order build_payment build_shipping build_logservice build_listener  ##build_broker build_auth build_logger build_mail build_listener
+up_build:  build_helper build_broker build_order build_payment build_shipping build_logservice build_listener build_eventemitter  ##build_broker build_auth build_logger build_mail build_listener
 	@echo "Stopping docker images (if running...)"
 	@echo "Building (when required) and starting docker images..."
 	docker-compose up --build  -d  
 	
 	@echo "Docker images built and started!"
 
-build_all: build_helper build_broker build_order build_payment build_logservice build_shipping build_listener ##build_auth build_logger build_mail build_listener
+build_all: build_helper build_broker build_order build_payment build_logservice build_shipping build_listener build_eventemitter  ##build_auth build_logger build_mail build_listener
 	@echo "All binaries built!"
 
 # git push
@@ -45,7 +46,8 @@ build_proto:
 	sudo ./protoc.sh order $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
 	sudo ./protoc.sh logservice $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
 	sudo ./protoc.sh payment $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
-	sudo ./protoc.sh shipping $(PROTO_VERSION) nileshdt nileshdt@gmail.com && 
+	sudo ./protoc.sh shipping $(PROTO_VERSION) nileshdt nileshdt@gmail.com && \
+	sudo ./protoc.sh eventEmitter $(PROTO_VERSION) nileshdt nileshdt@gmail.com  
 	@echo "Done!"
 
 build_protorefresh:
@@ -76,6 +78,12 @@ build_protorefresh:
 	go mod tidy && \
 	go get github.com/ayuved/microservices-helper/adapters@latest && \
 	go get github.com/ayuved/microservices-helper/domain@latest && \
+	go mod tidy  && \
+	cd ../eventEmitter && \
+	go mod tidy && \
+	go get github.com/ayuved/microservices-proto/golang/eventEmitter@latest && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest ;
 	go mod tidy ;
 	@echo "Done!"
 
@@ -127,6 +135,14 @@ build_shipping:
 	env GOOS=linux CGO_ENABLED=0  go build  -o ${SHIPPING_BINARY} ./cmd
 	@echo "Done!"
 
+build_eventemitter:
+	@echo "Building eventemitter binary..."
+	cd ../eventEmitter && go mod tidy && \
+	go get github.com/ayuved/microservices-proto/golang/eventEmitter@latest && \
+	go get github.com/ayuved/microservices-helper/domain@latest && \
+	go get github.com/ayuved/microservices-helper/adapters@latest && go mod tidy && \
+	env GOOS=linux CGO_ENABLED=0  go build  -o ${EVENTEMITTER_BINARY} ./cmd
+	@echo "Done!"
 
 ## build_logservice gger: builds the logger binary as a linux executable
 build_logservice:
@@ -204,6 +220,10 @@ docpush:
 	cd ../listener && docker build -t 909007/listener:latest .
 	# docker tag listener 909007/listener:latest
 	docker push 909007/listener:latest
+
+	cd ../eventemitter && docker build -t 909007/eventemitter:latest .
+	# docker tag eventemitter 909007/eventemitter:latest
+	docker push 909007/eventemitter:latest
 	@echo "Done!"
 
 ## kdelete: delete from kubernetes

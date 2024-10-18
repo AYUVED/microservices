@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -41,8 +42,11 @@ type OrderItemPayload struct {
 type MailPayload struct {
 	From    string `json:"from"`
 	To      string `json:"to"`
+	CC      string `json:"cc"`
+	BCC     string `json:"bcc"`
 	Subject string `json:"subject"`
 	Message string `json:"message"`
+
 }
 
 // AuthPayload is the embedded type (in RequestPayload) that describes an authentication request
@@ -89,9 +93,10 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	case "log":
 
 		app.logItem(w, requestPayload.Log)
-	// case "mail":
-	// 	app.sendMail(w, requestPayload.Mail)
+	case "mail":
+	 	app.sendMail(w, requestPayload.Mail)
 	case "logViaRabbit":
+		log.Printf("LogViaRabbit: %v\n", requestPayload.Log)
 		app.logEventViaRabbit(w, requestPayload.Log)
 	case "order":
 		log.Printf("Order: %v\n", requestPayload.Order)
@@ -224,44 +229,44 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 // 	app.writeJSON(w, http.StatusAccepted, payload)
 // }
 
-// // sendMail sends email by calling the mail microservice
-// func (app *Config) sendMail(w http.ResponseWriter, msg MailPayload) {
-// 	jsonData, _ := json.MarshalIndent(msg, "", "\t")
+// sendMail sends email by calling the mail microservice
+func (app *Config) sendMail(w http.ResponseWriter, msg MailPayload) {
+	jsonData, _ := json.MarshalIndent(msg, "", "\t")
 
-// 	// call the mail service
-// 	mailServiceURL := "http://mailer-service/send"
+	// call the mail service
+	mailServiceURL := "http://mailer-service/send"
 
-// 	// post to mail service
-// 	request, err := http.NewRequest("POST", mailServiceURL, bytes.NewBuffer(jsonData))
-// 	if err != nil {
-// 		app.errorJSON(w, err)
-// 		return
-// 	}
+	// post to mail service
+	request, err := http.NewRequest("POST", mailServiceURL, bytes.NewBuffer(jsonData))
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
 
-// 	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Content-Type", "application/json")
 
-// 	client := &http.Client{}
-// 	response, err := client.Do(request)
-// 	if err != nil {
-// 		app.errorJSON(w, err)
-// 		return
-// 	}
-// 	defer response.Body.Close()
+	client := &http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+	defer response.Body.Close()
 
-// 	// make sure we get back the right status code
-// 	if response.StatusCode != http.StatusAccepted {
-// 		app.errorJSON(w, errors.New("error calling mail service"))
-// 		return
-// 	}
+	// make sure we get back the right status code
+	if response.StatusCode != http.StatusAccepted {
+		app.errorJSON(w, errors.New("error calling mail service"))
+		return
+	}
 
-// 	// send back json
-// 	var payload jsonResponse
-// 	payload.Error = false
-// 	payload.Message = "Message sent to " + msg.To
+	// send back json
+	var payload jsonResponse
+	payload.Error = false
+	payload.Message = "Message sent to " + msg.To
 
-// 	app.writeJSON(w, http.StatusAccepted, payload)
+	app.writeJSON(w, http.StatusAccepted, payload)
 
-// }
+}
 
 // logEventViaRabbit logs an event using the logger-service. It makes the call by pushing the data to RabbitMQ.
 func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
@@ -290,7 +295,6 @@ func (app *Config) pushToQueue(name string, msg interface{}, t string, s string,
 	if err != nil {
 		return err
 	}
-	log.Printf("pushToQueue1: %v\n", name)
 	payload := LogPayload{
 		Name: name,
 		Data: msg,
@@ -299,17 +303,14 @@ func (app *Config) pushToQueue(name string, msg interface{}, t string, s string,
 		ProcessId: p,
 		User: u,
 	}
-	log.Printf("pushToQueue2: %v\n", payload)
 	j, err := json.MarshalIndent(&payload, "", "\t")
 	if err != nil {
 		return err
 	}
-	log.Printf("pushToQueue3: %v\n", string(j))
 	err = emitter.Push(string(j), "log.INFO")
 	if err != nil {
 		return err
 	}
-	log.Printf("pushToQueue4: %v\n", err)
 	return nil
 }
 
