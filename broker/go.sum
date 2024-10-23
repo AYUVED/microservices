@@ -1,9 +1,9 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f h1:cuSIXBAWdz1efBIfsUzxtv68LXVo8zGMb07+cNlazQA=
-github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f/go.mod h1:jxFDnKn+fv/caTiIfBuF+Hqjam7LVrusOGuM6pC2ntM=
-github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0 h1:d03oXYogkfvUWTOioeeLH2wxGNWq6qN/kpHlpswSh9A=
-github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0/go.mod h1:SlR3MN2i5/J1TWgefHUguJKg9twkOzZNcto5taZJQdg=
+github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d h1:sUklZtU3yaaLxOk8tANbH5pVGGJFA5PsJ3ALjPQ0VtU=
+github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d/go.mod h1:f4AkOcccEA7PF26ETNTo8Dm8/R573TtzE/avFohoCvo=
+github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.17 h1:9zzxPTR0XAE8aRvvx7F71jo9ADkdIeYRYhAjARGpvKQ=
+github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.17/go.mod h1:SlR3MN2i5/J1TWgefHUguJKg9twkOzZNcto5taZJQdg=
 github.com/ayuved/microservices-proto/golang/logservice v1.0.17 h1:UJy7UzUIxpAg0nrokqAcQSQ928SEvAgmOWU5qTivyPs=
 github.com/ayuved/microservices-proto/golang/logservice v1.0.17/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
 github.com/ayuved/microservices-proto/golang/order v1.0.17 h1:xrVqjHmnnRDeA8OY7pA3NOmxTqG9gj9ytu2KqQSL/zI=

@@ -25,6 +25,8 @@ spec:
               value:  "order:8080"
             - name: LOG_SERVICE_URL
               value:  "logservice:8083"
+            - name: EVENT_EMITTER_SERVICE_URL
+              value:  "eventemitter:8086"              
             - name: ENV
               value:  "prod"
           resources:

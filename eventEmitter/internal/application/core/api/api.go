@@ -2,6 +2,8 @@ package api
 
 import (
 	"context"
+	"log"
+
 	"github.com/ayuved/microservices-helper/domain"
 	"github.com/ayuved/microservices/eventEmitter/internal/ports"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -20,6 +22,7 @@ func NewApplication(event ports.EventPort, rabbit *amqp.Connection) *Application
 }
 
 func (a Application) AddLogEvent(ctx context.Context, eventEmitter domain.EventEmitter) (domain.EventEmitter, error) {
+	log.Printf("AddLogEvent: %v\n", eventEmitter)
 	err := a.event.LogEvent(ctx, &eventEmitter)
 	if err != nil {
 		return domain.EventEmitter{}, err

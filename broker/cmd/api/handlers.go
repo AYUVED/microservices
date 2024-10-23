@@ -97,7 +97,8 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	 	app.sendMail(w, requestPayload.Mail)
 	case "logViaRabbit":
 		log.Printf("LogViaRabbit: %v\n", requestPayload.Log)
-		app.logEventViaRabbit(w, requestPayload.Log)
+		//app.logEventViaRabbit(w, requestPayload.Log)
+		app.logItemEventEmitter(w, requestPayload.Log)
 	case "order":
 		log.Printf("Order: %v\n", requestPayload.Order)
 		app.PlaceOrder(w, requestPayload.Order)
@@ -177,6 +178,39 @@ func (app *Config) logItem(w http.ResponseWriter, l LogPayload) {
 
 }
 
+func (app *Config) logItemEventEmitter(w http.ResponseWriter, l LogPayload) {
+
+	log.Printf("Log 1: %v\n", l)
+
+	eventadapter, err := adapters.NewEventEmitterAdapter(config.GetEventEmitterServiceUrl())
+	if err != nil {
+		log.Fatalf("Failed to initialize payment stub. Error: %v", err)
+	}
+	log.Printf("Log 2: %v\n", l)
+	// convert orderPayload to a format that the order service can understand
+	ctx := context.TODO()
+
+	log.Printf("Log3: %v\n", l)
+	log.Printf("Log3: %v\n", l.Data)
+	logservice := domain.Logservice{
+		App:  l.App,
+		Name: l.Name,
+		Data:     l.Data,
+		Type:     l.Type,
+		Status:   l.Status,
+		ProcessId: l.ProcessId,
+		User:      l.User,
+	}
+	log.Printf("Logservice123: %v\n", logservice.Data)
+	err = eventadapter.AddLog(ctx, &logservice) // Assign the returned value to a variable
+	log.Printf("Logservice error: %v\n", err)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+	log.Printf("Logservice done: %v\n", logservice)
+
+}
 // // authenticate calls the authentication microservice and sends back the appropriate response
 // func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 // 	// create some json we'll send to the auth microservice

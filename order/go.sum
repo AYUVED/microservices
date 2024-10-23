@@ -10,10 +10,10 @@ github.com/Microsoft/go-winio v0.6.1 h1:9/kr64B9VUZrLm5YYwbGtUJnMgqWVOdUAXu6Migc
 github.com/Microsoft/go-winio v0.6.1/go.mod h1:LRdKpFKfdobln8UmuiYcKPot9D2v6svN5+sAH+4kjUM=
 github.com/Microsoft/hcsshim v0.11.4 h1:68vKo2VN8DE9AdN4tnkWnmdhqdbpUFM8OF3Airm7fz8=
 github.com/Microsoft/hcsshim v0.11.4/go.mod h1:smjE4dvqPX9Zldna+t5FG3rnoHhaB7QYxPRqGcpAD9w=
-github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f h1:cuSIXBAWdz1efBIfsUzxtv68LXVo8zGMb07+cNlazQA=
-github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f/go.mod h1:jxFDnKn+fv/caTiIfBuF+Hqjam7LVrusOGuM6pC2ntM=
-github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0 h1:d03oXYogkfvUWTOioeeLH2wxGNWq6qN/kpHlpswSh9A=
-github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0/go.mod h1:SlR3MN2i5/J1TWgefHUguJKg9twkOzZNcto5taZJQdg=
+github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d h1:sUklZtU3yaaLxOk8tANbH5pVGGJFA5PsJ3ALjPQ0VtU=
+github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d/go.mod h1:f4AkOcccEA7PF26ETNTo8Dm8/R573TtzE/avFohoCvo=
+github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.17 h1:9zzxPTR0XAE8aRvvx7F71jo9ADkdIeYRYhAjARGpvKQ=
+github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.17/go.mod h1:SlR3MN2i5/J1TWgefHUguJKg9twkOzZNcto5taZJQdg=
 github.com/ayuved/microservices-proto/golang/logservice v1.0.17 h1:UJy7UzUIxpAg0nrokqAcQSQ928SEvAgmOWU5qTivyPs=
 github.com/ayuved/microservices-proto/golang/logservice v1.0.17/go.mod h1:VffztM9uzZzd8PYC+GmE8HmBUWK12SGHX2YVoiQAIMo=
 github.com/ayuved/microservices-proto/golang/order v1.0.17 h1:xrVqjHmnnRDeA8OY7pA3NOmxTqG9gj9ytu2KqQSL/zI=

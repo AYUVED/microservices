@@ -27,6 +27,9 @@ func GetOrderServiceUrl() string {
 func GetLogServiceUrl() string {
 	return getEnvironmentValue("LOG_SERVICE_URL")
 }
+func GetEventEmitterServiceUrl() string {
+	return getEnvironmentValue("EVENT_EMITTER_SERVICE_URL")
+}
 func GetQueueUrl() string {
 	return getEnvironmentValue("QUEUE_URL")
 }

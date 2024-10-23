@@ -48,7 +48,7 @@ func (e *Emitter) Push(event string, name string, severity string) error {
 }
 
 func (e *Emitter) LogEvent(ctx context.Context, eventEmitter *domain.EventEmitter) error {
-
+	log.Printf("LogEvent: %v\n", eventEmitter)
 	emitter, err := NewLogEventEmitter(e.connection, "log_topic", "topic")
 	if err != nil {
 		return err

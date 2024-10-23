@@ -94,6 +94,7 @@ build_helper:
 	go get github.com/ayuved/microservices-proto/golang/logservice@latest && \
 	go get github.com/ayuved/microservices-proto/golang/payment@latest && \
 	go get github.com/ayuved/microservices-proto/golang/shipping@latest && \
+	go get github.com/ayuved/microservices-proto/golang/eventEmitter@latest && \
 	go mod tidy && \
 	env GOOS=linux CGO_ENABLED=0  && \
 	bash ./push.sh	;

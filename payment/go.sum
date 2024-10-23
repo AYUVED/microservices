@@ -1,5 +1,5 @@
-github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f h1:cuSIXBAWdz1efBIfsUzxtv68LXVo8zGMb07+cNlazQA=
-github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f/go.mod h1:jxFDnKn+fv/caTiIfBuF+Hqjam7LVrusOGuM6pC2ntM=
+github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d h1:sUklZtU3yaaLxOk8tANbH5pVGGJFA5PsJ3ALjPQ0VtU=
+github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d/go.mod h1:f4AkOcccEA7PF26ETNTo8Dm8/R573TtzE/avFohoCvo=
 github.com/ayuved/microservices-proto/golang/payment v1.0.17 h1:1KYabubb0SubWehTRRziiiF/tdBOmbGg3QrObwO+dwc=
 github.com/ayuved/microservices-proto/golang/payment v1.0.17/go.mod h1:U1nvIgf62EGp14kstaEeF0/urrSju4eT7YEBWwS//Kw=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

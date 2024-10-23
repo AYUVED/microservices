@@ -7,8 +7,11 @@ import (
 	"time"
 
 	"github.com/ayuved/microservices-helper/domain"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -36,9 +39,14 @@ type Adapter struct {
 
 func (a Adapter) Get(ctx context.Context, id string) (domain.Logservice, error) {
 
+	oid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return domain.Logservice{}, status.Errorf(codes.InvalidArgument, "Cannot parse ID")
+	}
 	// Find
 	var lsModel Logservice
-	err := a.db.FindOne(ctx, bson.M{"id": id}).Decode(&lsModel)
+	filter := bson.M{"_id": oid}
+	err = a.db.FindOne(ctx, filter).Decode(&lsModel)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,7 +65,7 @@ func (a Adapter) Get(ctx context.Context, id string) (domain.Logservice, error) 
 	return result, err
 }
 
-func (a Adapter) Add(ctx context.Context, logservice *domain.Logservice) error {
+func (a Adapter) Add(ctx context.Context, logservice *domain.Logservice) (error, string)  {
 	log.Println("Inserting logservice", logservice)
 	logModel := Logservice{
 		App:       logservice.App,
@@ -74,10 +82,14 @@ func (a Adapter) Add(ctx context.Context, logservice *domain.Logservice) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Inserted document with ID:", insertResult.InsertedID)
+	oid, ok := insertResult.InsertedID.(primitive.ObjectID)
+	if !ok {
+		return status.Errorf(codes.Internal, "Cannot convert to OID"), ""
+	}
+	log.Println("Inserted document with ID:", oid.Hex())
 	// fmt.Printf("Inserted document with ID: %v\n", insertResult.InsertedID)
 
-	return err
+	return err, oid.Hex()
 }
 
 func NewAdapter(dataSourceUrl string) (*Adapter, error) {

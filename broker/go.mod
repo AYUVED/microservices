@@ -3,7 +3,7 @@ module github.com/ayuved/microservices/broker
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f
+	github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d
 	github.com/ayuved/microservices-proto/golang/order v1.0.17
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/go-chi/cors v1.2.1
@@ -13,7 +13,7 @@ require (
 )
 
 require (
-	github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.0 // indirect
+	github.com/ayuved/microservices-proto/golang/eventEmitter v1.0.17 // indirect
 	github.com/ayuved/microservices-proto/golang/logservice v1.0.17 // indirect
 	github.com/ayuved/microservices-proto/golang/shipping v1.0.17 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect

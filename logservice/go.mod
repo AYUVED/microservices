@@ -3,7 +3,7 @@ module github.com/ayuved/microservices/logservice
 go 1.22.3
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f
+	github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d
 	github.com/ayuved/microservices-proto/golang/logservice v1.0.17
 	github.com/sirupsen/logrus v1.9.3
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.55.0

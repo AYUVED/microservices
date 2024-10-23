@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (a Adapter) Create(ctx context.Context, request *eventEmitter.CreateLogEventRequest) (*eventEmitter.CreateLogEventResponse, error) {
+func (a Adapter) AddLogEvent(ctx context.Context, request *eventEmitter.CreateLogEventRequest) (*eventEmitter.CreateLogEventResponse, error) {
 	log.WithContext(ctx).Info("Creating eventEmitter...")
 	neweventEmitter := domain.NewEventEmitter(request.App,request.Name, request.Data, request.ProcessId, request.Type,request.Status, request.User)
 	result, err := a.api.AddLogEvent(ctx, neweventEmitter)

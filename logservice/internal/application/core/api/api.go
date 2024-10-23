@@ -20,10 +20,15 @@ func NewApplication(db ports.DBPort) *Application {
 
 func (a Application) Add(ctx context.Context, logservice domain.Logservice) (domain.Logservice, error) {
 	log.Println("Adding logservice", logservice)
-	err := a.db.Add(ctx, &logservice)
+	err, id := a.db.Add(ctx, &logservice)
 	if err != nil {
 		return domain.Logservice{}, err
 	}
+	logservice, err = a.db.Get(ctx, id)
+	if err != nil {
+		return domain.Logservice{}, err
+	}
+	log.Println("Added logservice", logservice)
 	return logservice, nil
 }
 

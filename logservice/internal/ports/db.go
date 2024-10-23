@@ -8,5 +8,5 @@ import (
 
 type DBPort interface {
 	Get(ctx context.Context, id string) (domain.Logservice, error)
-	Add(ctx context.Context, logservice *domain.Logservice) error
+	Add(ctx context.Context, logservice *domain.Logservice) (error, string)
 }

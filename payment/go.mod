@@ -28,7 +28,7 @@ require (
 )
 
 require (
-	github.com/ayuved/microservices-helper v0.0.0-20241018021948-dbefc7141b9f
+	github.com/ayuved/microservices-helper v0.0.0-20241022195105-fc8259a5125d
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/sirupsen/logrus v1.9.3
